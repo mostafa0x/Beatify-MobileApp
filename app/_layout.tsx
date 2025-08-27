@@ -1,3 +1,4 @@
+import LinearView from "@/components/BackgroundApp";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -17,13 +18,18 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style="auto" />
-      </SafeAreaView>
+      <LinearView>
+        <SafeAreaView style={{ flex: 1 }}>
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              contentStyle: { backgroundColor: "transparent" },
+            }}
+          />
+
+          <StatusBar style="light" />
+        </SafeAreaView>
+      </LinearView>
     </SafeAreaProvider>
   );
 }
