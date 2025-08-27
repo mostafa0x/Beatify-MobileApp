@@ -1,4 +1,5 @@
 import Ellipse from "@/components/Ellipse";
+import FavouritesList from "@/components/FavouritesList";
 import GenreList from "@/components/GenreList";
 import PlayList from "@/components/PlayList";
 import SearchbarFC from "@/components/SearchbarFC";
@@ -12,7 +13,7 @@ export default function HomeScreen() {
   const [serachValue, setSerachValue] = useState("");
   return (
     <View style={styles.container}>
-      <Ellipse onLeft={true} x={0} y={50} />
+      <Ellipse onLeft={true} x={0} y={30} />
       <View style={styles.headerContiner}>
         <Text style={styles.mainTxt}>Welcome back!</Text>
         <Text style={styles.secTxt}>What do you feel like today?</Text>
@@ -29,7 +30,9 @@ export default function HomeScreen() {
       </View>
       <View style={styles.favouritesContiner}>
         <Text style={styles.textFavourite}>Your favourites</Text>
-        <View style={styles.favouriteList}></View>
+        <View style={styles.favouriteList}>
+          <FavouritesList />
+        </View>
       </View>
     </View>
   );
@@ -69,7 +72,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: rw(24),
   },
   favouriteList: {
-    marginTop: rh(24),
+    marginTop: rh(20),
   },
   textFavourite: {
     fontFamily: Fonts.OpenSansSemiBold,
