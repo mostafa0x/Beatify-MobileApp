@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-export default function NotFoundScreen() {
+export default function HomeScreen() {
   return (
     <View>
-      <Text>NotFoundScreen</Text>
+      <Text>HomeScreen</Text>
     </View>
   );
 }
