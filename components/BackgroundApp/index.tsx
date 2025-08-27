@@ -1,5 +1,6 @@
+import { Colors } from "@/constants/Colors";
 import React from "react";
-import { ImageBackground, StyleSheet } from "react-native";
+import { ImageBackground, StyleSheet, View } from "react-native";
 import LinearView from "../LinearView";
 
 export default function BackgroundApp({
@@ -7,7 +8,7 @@ export default function BackgroundApp({
 }: {
   children: React.ReactNode;
 }) {
-  const x = true;
+  const x = false;
   return (
     <>
       {x ? (
@@ -19,7 +20,7 @@ export default function BackgroundApp({
           <LinearView>{children}</LinearView>
         </ImageBackground>
       ) : (
-        <LinearView>{children}</LinearView>
+        <View style={styles.withoutImg}>{children}</View>
       )}
     </>
   );
@@ -27,5 +28,5 @@ export default function BackgroundApp({
 
 const styles = StyleSheet.create({
   backImg: { flex: 1, zIndex: -1 },
-  liner: { flex: 1 },
+  withoutImg: { flex: 1, backgroundColor: Colors.appBg },
 });
