@@ -5,7 +5,13 @@ import React, { memo } from "react";
 import { StyleSheet } from "react-native";
 import { Searchbar } from "react-native-paper";
 
-function SearchbarFC({ serachValue }: { serachValue: string }) {
+function SearchbarFC({
+  serachValue,
+  setSerachValue,
+}: {
+  serachValue: string;
+  setSerachValue: any;
+}) {
   return (
     <Searchbar
       iconColor={Colors.iconColorPrimary}
@@ -14,6 +20,7 @@ function SearchbarFC({ serachValue }: { serachValue: string }) {
       placeholderTextColor={Colors.textSec}
       inputStyle={styles.searchbarInput}
       value={serachValue}
+      onChangeText={setSerachValue}
     />
   );
 }
@@ -29,7 +36,7 @@ const styles = StyleSheet.create({
   searchbarInput: {
     fontFamily: Fonts.OpenSansRegular,
     fontSize: rf(14),
-    color: Colors.textSec,
+    color: Colors.textPrimary,
   },
 });
 

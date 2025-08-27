@@ -6,20 +6,31 @@ import SearchbarFC from "@/components/SearchbarFC";
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
 import { rf, rh, rw } from "@/utils/dimensions";
-import React, { useState } from "react";
+import { useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 export default function HomeScreen() {
   const [serachValue, setSerachValue] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push("/PlayList" as any);
+    return () => {};
+  }, [router]);
+
   return (
     <View style={styles.container}>
-      <Ellipse onLeft={true} x={0} y={30} />
+      <Ellipse onLeft={true} x={0} y={30} type={0} />
       <View style={styles.headerContiner}>
         <Text style={styles.mainTxt}>Welcome back!</Text>
         <Text style={styles.secTxt}>What do you feel like today?</Text>
       </View>
       <View style={styles.serachContiner}>
-        <SearchbarFC serachValue={serachValue} />
+        <SearchbarFC
+          serachValue={serachValue}
+          setSerachValue={setSerachValue}
+        />
       </View>
 
       <View style={styles.genreList}>

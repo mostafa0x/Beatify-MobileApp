@@ -3,12 +3,26 @@ import { Image } from "expo-image";
 import React, { memo } from "react";
 import { StyleSheet, View } from "react-native";
 
-function Ellipse({ onLeft, x, y }: { onLeft: boolean; x: number; y: number }) {
+function Ellipse({
+  onLeft,
+  x,
+  y,
+  type = 0,
+}: {
+  onLeft: boolean;
+  x: number;
+  y: number;
+  type: number;
+}) {
+  const imgs = {
+    0: require("@/assets/images/Ellipse.png"),
+    1: require("@/assets/images/Ellipse2.png"),
+  };
   return (
     <View style={[styles.container, { left: rw(x), top: rh(y) }]}>
       <Image
         style={[styles.img, onLeft && styles.img_left]}
-        source={require("@/assets/images/Ellipse.png")}
+        source={type == 0 ? imgs[0] : imgs[1]}
       />
     </View>
   );
