@@ -6,18 +6,11 @@ import SearchbarFC from "@/components/SearchbarFC";
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
 import { rf, rh, rw } from "@/utils/dimensions";
-import { useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 export default function HomeScreen() {
   const [serachValue, setSerachValue] = useState("");
-  const router = useRouter();
-
-  useEffect(() => {
-    router.push("/PlayList" as any);
-    return () => {};
-  }, [router]);
 
   return (
     <View style={styles.container}>

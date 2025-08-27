@@ -2,12 +2,17 @@ import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
+import { useRouter } from "expo-router";
 import React, { memo } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 function PlayItem() {
+  const router = useRouter();
   return (
-    <View style={styles.contianer}>
+    <TouchableOpacity
+      onPress={() => router.push("/(tabs)/PlayListScreen" as any)}
+      style={styles.contianer}
+    >
       <View style={styles.imgContiner}>
         <Image
           style={styles.img}
@@ -27,7 +32,7 @@ function PlayItem() {
         </Text>
         <Text style={styles.secText}>Chill your mind</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
