@@ -4,22 +4,34 @@ import FavouritesList from "@/components/FavouritesList";
 import FooterInfo from "@/components/FooterInfo";
 import LinearView from "@/components/LinearView";
 import usePlayListItem from "@/hook/usePlayListItem";
+import { setTracks } from "@/lib/store/AudioPlayerSlice";
 import { PlayListItemType } from "@/types/PlayListType";
 import { rh, rw } from "@/utils/dimensions";
 import { ImageBackground } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
 import { Skeleton } from "moti/skeleton";
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
+import { useDispatch } from "react-redux";
 
 interface hookType {
   data: PlayListItemType;
 }
 
 export default function PlayListScreen() {
+  const dispatch = useDispatch();
   const { id } = useLocalSearchParams();
   const playListId = Array.isArray(id) ? parseInt(id[0]) : parseInt(id);
   const { data, isLoading } = usePlayListItem(playListId);
+
+  useEffect(() => {
+    if (data) {
+      dispatch(setTracks(data.tracks.data));
+    }
+
+    return () => {};
+  }, [data]);
+
   return (
     <View>
       <Ellipse onLeft={false} x={0} y={0} type={1} />
@@ -46,7 +58,11 @@ export default function PlayListScreen() {
         </ImageBackground>
       </Skeleton>
       <View style={styles.sectionBottom}>
-        <FavouritesList data={data?.tracks.data} isLoading={isLoading} />
+        <FavouritesList
+          data={data?.tracks.data}
+          isLoading={isLoading}
+          from={"home"}
+        />
       </View>
     </View>
   );

@@ -5,7 +5,6 @@ import { useQuery, UseQueryResult } from "@tanstack/react-query";
 async function fetchData(playlistId: number) {
   try {
     const res = await axiosClient.get(`/playlist/${playlistId}`);
-    console.log(res.data);
 
     return res.data;
   } catch (err: any) {

@@ -37,7 +37,7 @@ function FooterInfo({
       </View>
       <View style={styles.rigthSide}>
         <LoveIcon />
-        {withLove && <CricelBtn size={{ w: 56, h: 56 }} type="play" />}
+        {withLove && <CricelBtn size={{ w: 56, h: 56 }} />}
       </View>
     </View>
   );

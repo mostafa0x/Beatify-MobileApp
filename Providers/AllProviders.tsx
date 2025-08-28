@@ -1,4 +1,6 @@
+import AudioPlayer from "@/components/AudioPlayer";
 import React from "react";
+import { Provider } from "react-native-paper";
 import ReactQueryProvider from "./ReactQueryProvider";
 
 export default function AllProviders({
@@ -6,5 +8,12 @@ export default function AllProviders({
 }: {
   children: React.ReactNode;
 }) {
-  return <ReactQueryProvider>{children}</ReactQueryProvider>;
+  return (
+    <Provider>
+      <ReactQueryProvider>
+        {children}
+        <AudioPlayer />
+      </ReactQueryProvider>
+    </Provider>
+  );
 }
