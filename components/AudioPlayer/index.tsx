@@ -1,23 +1,26 @@
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
+import { setIsPlayingPlayer, setPosition } from "@/lib/store/AudioPlayerSlice";
 import { StateType } from "@/types/store/StateType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import Slider from "@react-native-community/slider";
 import { useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
 import { Image } from "expo-image";
+import { usePathname } from "expo-router";
 import { Skeleton } from "moti/skeleton";
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Portal } from "react-native-paper";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CricelBtn from "../Icons/CricelBtn";
 
 function AudioPlayer() {
-  const { currentTrack, cureentIndex, isPlayingPlayer } = useSelector(
-    (state: StateType) => state.AudioPlayerReducer
-  );
+  const dispatch = useDispatch();
+  const pathName = usePathname();
+
+  const { tracks, currentTrack, cureentIndex, isPlayingPlayer, position } =
+    useSelector((state: StateType) => state.AudioPlayerReducer);
   const player = useAudioPlayer({ uri: currentTrack?.preview });
-  const [position, setPosition] = useState(0);
   const status = useAudioPlayerStatus(player);
 
   useEffect(() => {
@@ -28,63 +31,73 @@ function AudioPlayer() {
     }
     // console.log(player.currentStatus);
 
-    setPosition(player.currentTime);
+    dispatch(setPosition(player.currentTime));
 
     return () => {};
   }, [isPlayingPlayer, player]);
 
   useEffect(() => {
-    setPosition(status.currentTime);
+    dispatch(setPosition(player.currentTime));
+    if (player.currentStatus.didJustFinish)
+      if (tracks.length < 0) {
+        dispatch(setIsPlayingPlayer());
+      } else {
+        dispatch(setIsPlayingPlayer());
+      }
 
     return () => {};
   }, [status]);
 
   return (
-    <Portal>
-      <View style={styles.container}>
-        <View style={styles.top}>
-          <View style={styles.leftSide}>
-            <Skeleton>
-              <Image
-                style={styles.img}
-                source={{ uri: currentTrack?.album?.cover_small }}
+    pathName !== "/Song" && (
+      <Portal>
+        <View style={styles.container}>
+          <View style={styles.top}>
+            <View style={styles.leftSide}>
+              <Skeleton>
+                <Image
+                  style={styles.img}
+                  source={{ uri: currentTrack?.album?.cover_small }}
+                />
+              </Skeleton>
+              <View>
+                <Text style={styles.songName}>{currentTrack?.title}</Text>
+                <Text style={styles.songMaker}>
+                  {currentTrack?.artist?.name}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.rigthSide}>
+              <CricelBtn
+                size={{
+                  w: 56,
+                  h: 56,
+                }}
               />
-            </Skeleton>
-            <View>
-              <Text style={styles.songName}>{currentTrack?.title}</Text>
-              <Text style={styles.songMaker}>{currentTrack?.artist?.name}</Text>
             </View>
           </View>
-          <View style={styles.rigthSide}>
-            <CricelBtn
-              size={{
-                w: 56,
-                h: 56,
+          <View style={styles.bot}>
+            <Slider
+              style={styles.slider}
+              minimumValue={0}
+              maximumValue={player.currentStatus.duration}
+              value={position}
+              minimumTrackTintColor={Colors.textPrimary}
+              maximumTrackTintColor={Colors.textSec}
+              thumbTintColor={Colors.textPrimary}
+              onValueChange={(value) => {
+                setPosition(value);
+                //   player.seekTo(value);
+              }}
+              onSlidingComplete={(value) => {
+                player.seekTo(value);
+                console.log("Seek to:", value);
               }}
             />
           </View>
         </View>
-        <View style={styles.bot}>
-          <Slider
-            style={styles.slider}
-            minimumValue={0}
-            maximumValue={player.currentStatus.duration}
-            value={position}
-            minimumTrackTintColor={Colors.textPrimary}
-            maximumTrackTintColor={Colors.textSec}
-            thumbTintColor={Colors.textPrimary}
-            onValueChange={(value) => {
-              setPosition(value);
-              //   player.seekTo(value);
-            }}
-            onSlidingComplete={(value) => {
-              player.seekTo(value);
-              console.log("Seek to:", value);
-            }}
-          />
-        </View>
-      </View>
-    </Portal>
+      </Portal>
+    )
   );
 }
 
