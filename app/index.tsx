@@ -5,16 +5,21 @@ import PlayList from "@/components/PlayList";
 import SearchbarFC from "@/components/SearchbarFC";
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
+import usePlayListById from "@/hook/usePlayListById";
+import { StateType } from "@/types/store/StateType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { useSelector } from "react-redux";
 
 export default function HomeScreen() {
   const [serachValue, setSerachValue] = useState("");
+  const { genreActive } = useSelector((state: StateType) => state.AppReducer);
+  const { data } = usePlayListById(genreActive);
 
   return (
     <View style={styles.container}>
-      <Ellipse onLeft={true} x={0} y={30} type={0} />
+      <Ellipse onLeft={true} x={0} y={30} type={1} />
       <View style={styles.headerContiner}>
         <Text style={styles.mainTxt}>Welcome back!</Text>
         <Text style={styles.secTxt}>What do you feel like today?</Text>

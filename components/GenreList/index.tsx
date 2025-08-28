@@ -1,26 +1,28 @@
+import { genreType } from "@/types/genreType";
+import { StateType } from "@/types/store/StateType";
 import { rw } from "@/utils/dimensions";
 import { FlashList } from "@shopify/flash-list";
 import React, { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
+import { useSelector } from "react-redux";
 import GenreItem from "./item";
 
 export default function GenreList() {
-  const renderItem = useCallback(
-    ({ item, index }: { item: any; index: number }) => {
-      return <GenreItem item={item} />;
-    },
-    []
-  );
+  const { genreList } = useSelector((state: StateType) => state.AppReducer);
+  const renderItem = useCallback(({ item }: { item: genreType }) => {
+    return <GenreItem item={item} />;
+  }, []);
 
   const ItemSeparator = useCallback(() => {
     return <View style={styles.itemSeparator}></View>;
   }, []);
+
   return (
     <View style={styles.list}>
       <FlashList
         horizontal
-        data={["Recent", "Top 50", "Chill", "R&B", "Festival", 6]}
-        keyExtractor={(item, index) => index.toString()}
+        data={genreList}
+        keyExtractor={(item, index) => item.id.toString()}
         estimatedItemSize={58}
         renderItem={renderItem}
         showsHorizontalScrollIndicator={false}
