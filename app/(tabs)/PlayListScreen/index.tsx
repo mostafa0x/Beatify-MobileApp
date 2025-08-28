@@ -35,7 +35,11 @@ export default function PlayListScreen() {
             <View style={styles.sectionTop}>
               <AppBar />
               <View style={styles.footer}>
-                <FooterInfo data={data} withLove />
+                <FooterInfo
+                  title={data?.title ?? "unknow"}
+                  description={data?.description ?? "unknow"}
+                  withLove
+                />
               </View>
             </View>
           </LinearView>

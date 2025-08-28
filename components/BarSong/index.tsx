@@ -1,10 +1,11 @@
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
+import { formatTime } from "@/services/formatTime";
 import { rf, rh, rw } from "@/utils/dimensions";
 import React, { memo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-function BarSong() {
+function BarSong({ duration }: { duration: number }) {
   return (
     <View style={styles.continer}>
       <View style={styles.barContianer}>
@@ -13,7 +14,7 @@ function BarSong() {
       </View>
       <View style={styles.timeContianer}>
         <Text style={styles.txtTime}>0:2</Text>
-        <Text style={styles.txtTime}>1:23</Text>
+        <Text style={styles.txtTime}>{formatTime(duration)}</Text>
       </View>
     </View>
   );

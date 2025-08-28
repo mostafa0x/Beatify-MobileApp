@@ -36,6 +36,7 @@ function PlayItem({
             source={{
               uri: item?.picture_big,
             }}
+            cachePolicy={"memory-disk"}
           />
         </Skeleton>
       </View>

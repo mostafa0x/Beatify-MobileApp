@@ -17,7 +17,11 @@ function FavouritesItem({
 }) {
   return (
     <TouchableOpacity
-      onPress={() => router.push("/Song" as any)}
+      onPress={() => {
+        if (!isLoading) {
+          router.push({ pathname: "/Song" as any, params: { id: item?.id } });
+        }
+      }}
       style={styles.container}
     >
       <View style={styles.infoBox}>

@@ -13,7 +13,7 @@ function FavouritesList({
   isLoading: boolean;
 }) {
   const renderItem = useCallback(
-    ({ item, index }: { item: TrackType; index: number }) => {
+    ({ item }: { item: TrackType }) => {
       return <FavouritesItem item={item} isLoading={isLoading} />;
     },
     [isLoading]

@@ -3,12 +3,18 @@ import BarSong from "@/components/BarSong";
 import Ellipse from "@/components/Ellipse";
 import FooterInfo from "@/components/FooterInfo";
 import PlaySongOptions from "@/components/PlaySongOptions";
+import useSong from "@/hook/useSong";
 import { rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
+import { useLocalSearchParams } from "expo-router";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
 export default function SongScreen() {
+  const { id } = useLocalSearchParams();
+  const songId = Array.isArray(id) ? parseInt(id[0]) : parseInt(id);
+  const { data } = useSong(songId);
+
   return (
     <View style={styles.container}>
       <Ellipse onLeft={true} x={0} y={0} type={3} />
@@ -20,13 +26,16 @@ export default function SongScreen() {
         <Image
           style={styles.img}
           source={{
-            uri: "https://cdn-images.dzcdn.net/images/artist/638e69b9caaf9f9f3f8826febea7b543/1000x1000-000000-80-0-0.jpg",
+            uri: data?.album?.cover_big,
           }}
         />
-        <FooterInfo />
+        <FooterInfo
+          title={data?.title ?? "unknow"}
+          description={data?.artist.name ?? "unknow"}
+        />
       </View>
       <View style={styles.barContainer}>
-        <BarSong />
+        <BarSong duration={data?.duration ?? 0} />
       </View>
       <View style={styles.playOptions}>
         <PlaySongOptions />

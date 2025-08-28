@@ -1,18 +1,20 @@
+import { handleBack } from "@/services/handleBack";
 import { rh, rw } from "@/utils/dimensions";
+import { useRouter } from "expo-router";
 import React, { memo } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import BackIcon from "../Icons/BackIcon";
-import MenuIcon from "../Icons/MenuIcon";
 
 function Appbar() {
+  const router = useRouter();
   return (
     <View style={styles.appBar}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => handleBack(router)}>
         <BackIcon width={rw(32)} height={rh(32)} />
       </TouchableOpacity>
-      <TouchableOpacity>
+      {/* <TouchableOpacity>
         <MenuIcon width={rw(32)} height={rh(32)} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 }

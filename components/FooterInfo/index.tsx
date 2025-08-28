@@ -1,6 +1,5 @@
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
-import { PlayListItemType } from "@/types/PlayListType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import React, { memo } from "react";
 import { StyleSheet, Text, View } from "react-native";
@@ -9,10 +8,12 @@ import LoveIcon from "../Icons/LoveIcon";
 
 function FooterInfo({
   withLove,
-  data,
+  title,
+  description,
 }: {
   withLove?: boolean;
-  data: PlayListItemType | undefined;
+  title: string;
+  description: string;
 }) {
   return (
     <View style={styles.footerInfo}>
@@ -23,7 +24,7 @@ function FooterInfo({
           minimumFontScale={0.5}
           style={styles.playListName}
         >
-          {data?.title}
+          {title}
         </Text>
         <Text
           numberOfLines={1}
@@ -31,7 +32,7 @@ function FooterInfo({
           minimumFontScale={0.5}
           style={styles.playListPepole}
         >
-          {data?.description}
+          {description}
         </Text>
       </View>
       <View style={styles.rigthSide}>
