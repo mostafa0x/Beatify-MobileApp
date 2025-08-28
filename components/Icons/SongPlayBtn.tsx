@@ -1,4 +1,7 @@
-import { setIsPlayingPlayer } from "@/lib/store/AudioPlayerSlice";
+import {
+  setIsPlayingPlayer,
+  setPlaySongInSamePlayList,
+} from "@/lib/store/AudioPlayerSlice";
 import { StateType } from "@/types/store/StateType";
 import { rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
@@ -11,7 +14,7 @@ type sizeType = {
   h: number;
 };
 
-export default function CricelBtn({
+export default function SongPlayBtn({
   size = { w: 56, h: 56 },
 }: {
   size: sizeType;
@@ -27,14 +30,24 @@ export default function CricelBtn({
   return (
     <TouchableOpacity
       onPress={() =>
-        isPlayingPlayer
-          ? dispatch(setIsPlayingPlayer(false))
-          : dispatch(setIsPlayingPlayer(true))
+        currentTrack?.id == onTrack?.id
+          ? isPlayingPlayer
+            ? dispatch(setIsPlayingPlayer(false))
+            : dispatch(setIsPlayingPlayer(true))
+          : dispatch(setPlaySongInSamePlayList(onTrack?.id))
       }
     >
       <Image
         style={{ width: rw(w), height: rh(h) }}
-        source={btns[isPlayingPlayer ? "pause" : "play"]}
+        source={
+          btns[
+            currentTrack?.id == onTrack?.id
+              ? isPlayingPlayer
+                ? "pause"
+                : "play"
+              : "play"
+          ]
+        }
         contentFit="contain"
       />
     </TouchableOpacity>

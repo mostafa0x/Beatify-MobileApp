@@ -19,6 +19,7 @@ export default function BarSong({
   return (
     <View>
       <Slider
+        disabled={!isSame}
         style={styles.slider}
         minimumValue={0}
         maximumValue={28}
@@ -35,7 +36,11 @@ export default function BarSong({
       />
 
       <View style={styles.timeContianer}>
-        <Text style={styles.txtTime}>{formatTime(Math.floor(position))}</Text>
+        <Text style={styles.txtTime}>
+          {isSame
+            ? "00:" + Math.floor(position).toString().padStart(2, "0")
+            : "00:00"}
+        </Text>
         <Text style={styles.txtTime}>{formatTime(duration)}</Text>
       </View>
     </View>

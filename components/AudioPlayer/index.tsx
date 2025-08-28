@@ -16,12 +16,12 @@ import CricelBtn from "../Icons/CricelBtn";
 function AudioPlayer() {
   const pathName = usePathname();
 
-  const { currentTrack } = useSelector(
+  const { currentTrack, onTrack } = useSelector(
     (state: StateType) => state.AudioPlayerReducer
   );
   const { player, position, setPosition } = usePlayerAudio();
   return (
-    pathName !== "/Song" &&
+    currentTrack?.id !== onTrack?.id &&
     currentTrack && (
       <Portal>
         <View style={styles.container}>

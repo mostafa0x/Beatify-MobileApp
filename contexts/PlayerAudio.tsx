@@ -50,7 +50,7 @@ export default function PlayerAudioProvider({
   }
 
   function pauseAudio() {
-    if (player) {
+    if (player && player.currentStatus.isLoaded) {
       player.pause();
     }
   }

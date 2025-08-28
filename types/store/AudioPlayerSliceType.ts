@@ -8,4 +8,5 @@ export interface AudioPlayerSliceType {
   currentPlayList: TrackType[];
   currentPlayListId: number | null;
   playListId: number | null;
+  onTrack: TrackType | null;
 }

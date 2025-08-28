@@ -18,6 +18,7 @@ const initialState: AudioPlayerSliceType = {
   cureentIndex: 0,
   currentPlayList: [],
   currentPlayListId: null,
+  onTrack: null,
 };
 
 const AudioPlayerSlice = createSlice({
@@ -40,6 +41,21 @@ const AudioPlayerSlice = createSlice({
       state.currentTrack = state.playListTracks[0];
       state.cureentIndex = 0;
       state.isPlayingPlayer = true;
+    },
+    setOnTrack: (state, action) => {
+      state.onTrack = action.payload;
+    },
+    setPlaySongInSamePlayList: (state, action) => {
+      const songId = action.payload;
+      const track = state.currentPlayList.find((item) => item?.id == songId);
+      const indexSong = state.currentPlayList.findIndex(
+        (item) => item.id == songId
+      );
+      if (track && indexSong) {
+        state.currentTrack = track;
+        state.cureentIndex = indexSong;
+        state.isPlayingPlayer = true;
+      }
     },
     setCurrentTrack: (state, action) => {
       state.cureentIndex = action.payload;
@@ -72,4 +88,6 @@ export const {
   setCurrentIndex,
   setPlayListId,
   setNewPlayList,
+  setOnTrack,
+  setPlaySongInSamePlayList,
 } = AudioPlayerSlice.actions;
