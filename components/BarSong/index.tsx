@@ -1,19 +1,16 @@
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
-import { setPosition } from "@/lib/store/AudioPlayerSlice";
+import { usePlayerAudio } from "@/contexts/PlayerAudio";
 import { formatTime } from "@/services/formatTime";
-import { StateType } from "@/types/store/StateType";
 import { rf, rh } from "@/utils/dimensions";
 import Slider from "@react-native-community/slider";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export default function BarSong({ duration }: { duration: number }) {
   const dispatch = useDispatch();
-  const { position } = useSelector(
-    (state: StateType) => state.AudioPlayerReducer
-  );
+  const { player, position, setPosition } = usePlayerAudio();
 
   return (
     <View>
@@ -25,9 +22,10 @@ export default function BarSong({ duration }: { duration: number }) {
         minimumTrackTintColor={Colors.textPrimary}
         maximumTrackTintColor={Colors.textSec}
         thumbTintColor={Colors.textPrimary}
-        onValueChange={(value) => dispatch(setPosition(value))}
+        onValueChange={(value) => setPosition(value)}
         onSlidingComplete={(value) => {
           console.log("Seek to:", value);
+          player?.seekTo(value);
         }}
       />
 

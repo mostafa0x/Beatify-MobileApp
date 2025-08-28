@@ -5,5 +5,4 @@ export interface AudioPlayerSliceType {
   currentTrack: TrackType | null;
   cureentIndex: number;
   isPlayingPlayer: boolean;
-  position: number;
 }

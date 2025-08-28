@@ -1,14 +1,13 @@
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
-import { setIsPlayingPlayer, setPosition } from "@/lib/store/AudioPlayerSlice";
+import { usePlayerAudio } from "@/contexts/PlayerAudio";
 import { StateType } from "@/types/store/StateType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import Slider from "@react-native-community/slider";
-import { useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
 import { Image } from "expo-image";
 import { usePathname } from "expo-router";
 import { Skeleton } from "moti/skeleton";
-import React, { memo, useEffect } from "react";
+import React, { memo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Portal } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,36 +17,10 @@ function AudioPlayer() {
   const dispatch = useDispatch();
   const pathName = usePathname();
 
-  const { tracks, currentTrack, cureentIndex, isPlayingPlayer, position } =
-    useSelector((state: StateType) => state.AudioPlayerReducer);
-  const player = useAudioPlayer({ uri: currentTrack?.preview });
-  const status = useAudioPlayerStatus(player);
-
-  useEffect(() => {
-    if (isPlayingPlayer) {
-      player.play();
-    } else {
-      player.pause();
-    }
-    // console.log(player.currentStatus);
-
-    dispatch(setPosition(player.currentTime));
-
-    return () => {};
-  }, [isPlayingPlayer, player]);
-
-  useEffect(() => {
-    dispatch(setPosition(player.currentTime));
-    if (player.currentStatus.didJustFinish)
-      if (tracks.length < 0) {
-        dispatch(setIsPlayingPlayer());
-      } else {
-        dispatch(setIsPlayingPlayer());
-      }
-
-    return () => {};
-  }, [status]);
-
+  const { currentTrack } = useSelector(
+    (state: StateType) => state.AudioPlayerReducer
+  );
+  const { player, position, setPosition } = usePlayerAudio();
   return (
     pathName !== "/Song" && (
       <Portal>
@@ -80,18 +53,16 @@ function AudioPlayer() {
             <Slider
               style={styles.slider}
               minimumValue={0}
-              maximumValue={player.currentStatus.duration}
+              maximumValue={player?.currentStatus?.duration}
               value={position}
               minimumTrackTintColor={Colors.textPrimary}
               maximumTrackTintColor={Colors.textSec}
               thumbTintColor={Colors.textPrimary}
               onValueChange={(value) => {
                 setPosition(value);
-                //   player.seekTo(value);
               }}
               onSlidingComplete={(value) => {
-                player.seekTo(value);
-                console.log("Seek to:", value);
+                player?.seekTo(value);
               }}
             />
           </View>

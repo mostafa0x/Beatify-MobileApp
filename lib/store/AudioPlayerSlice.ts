@@ -6,7 +6,6 @@ const initialState: AudioPlayerSliceType = {
   tracks: [],
   cureentIndex: 0,
   isPlayingPlayer: false,
-  position: 0,
 };
 
 const AudioPlayerSlice = createSlice({
@@ -25,12 +24,9 @@ const AudioPlayerSlice = createSlice({
       state.isPlayingPlayer = state.isPlayingPlayer ? false : true;
       console.log(state.isPlayingPlayer);
     },
-    setPosition: (state, action) => {
-      state.position = action.payload;
-    },
   },
 });
 
 export const AudioPlayerReducer = AudioPlayerSlice.reducer;
-export const { setCurrentTrack, setTracks, setIsPlayingPlayer, setPosition } =
+export const { setCurrentTrack, setTracks, setIsPlayingPlayer } =
   AudioPlayerSlice.actions;
