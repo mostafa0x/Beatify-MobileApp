@@ -1,26 +1,38 @@
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
+import { PlayListType } from "@/types/PlayListType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
+import { Skeleton } from "moti/skeleton";
 import React, { memo } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-function PlayItem() {
+function PlayItem({
+  item,
+  isLoading,
+}: {
+  item: PlayListType;
+  isLoading: boolean;
+}) {
   const router = useRouter();
+
   return (
     <TouchableOpacity
       onPress={() => router.push("/(tabs)/PlayListScreen" as any)}
       style={styles.contianer}
     >
       <View style={styles.imgContiner}>
-        <Image
-          style={styles.img}
-          source={{
-            uri: "https://cdn-images.dzcdn.net/images/artist/638e69b9caaf9f9f3f8826febea7b543/1000x1000-000000-80-0-0.jpg",
-          }}
-        />
+        <Skeleton show={isLoading} radius={styles.img.borderRadius}>
+          <Image
+            style={styles.img}
+            source={{
+              uri: item?.picture_big,
+            }}
+          />
+        </Skeleton>
       </View>
+
       <View style={styles.textContianer}>
         <Text
           numberOfLines={1}
@@ -28,9 +40,9 @@ function PlayItem() {
           maxFontSizeMultiplier={0.7}
           style={styles.mainText}
         >
-          R&B Playlist
+          {item?.title}
         </Text>
-        <Text style={styles.secText}>Chill your mind</Text>
+        <Text style={styles.secText}>{item?.user?.name}</Text>
       </View>
     </TouchableOpacity>
   );

@@ -32,7 +32,6 @@ export default function RootLayout() {
                   animation: "fade",
                 }}
               />
-
               <StatusBar style="light" />
             </SafeAreaView>
           </LinearView>
