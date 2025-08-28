@@ -34,6 +34,13 @@ const AudioPlayerSlice = createSlice({
         state.cureentIndex = 0;
       }
     },
+    setNewPlayList: (state) => {
+      state.currentPlayList = state.playListTracks;
+      state.currentPlayListId = state.playListId;
+      state.currentTrack = state.playListTracks[0];
+      state.cureentIndex = 0;
+      state.isPlayingPlayer = true;
+    },
     setCurrentTrack: (state, action) => {
       state.cureentIndex = action.payload;
     },
@@ -64,4 +71,5 @@ export const {
   setIsPlayingPlayer,
   setCurrentIndex,
   setPlayListId,
+  setNewPlayList,
 } = AudioPlayerSlice.actions;

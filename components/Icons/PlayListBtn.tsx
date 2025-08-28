@@ -1,4 +1,7 @@
-import { setIsPlayingPlayer } from "@/lib/store/AudioPlayerSlice";
+import {
+  setIsPlayingPlayer,
+  setNewPlayList,
+} from "@/lib/store/AudioPlayerSlice";
 import { StateType } from "@/types/store/StateType";
 import { rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
@@ -18,8 +21,13 @@ export default function PlayListBtn({
 }) {
   const { w, h } = size;
   const dispatch = useDispatch();
-  const { isPlayingPlayer, currentTrack, currentPlayList, playListTracks } =
-    useSelector((state: StateType) => state.AudioPlayerReducer);
+  const {
+    isPlayingPlayer,
+    currentTrack,
+    currentPlayList,
+    playListId,
+    currentPlayListId,
+  } = useSelector((state: StateType) => state.AudioPlayerReducer);
   const btns = {
     play: require("@/assets/images/playBtn.png"),
     pause: require("@/assets/images/pauseBtn.png"),
@@ -27,14 +35,24 @@ export default function PlayListBtn({
   return (
     <TouchableOpacity
       onPress={() => {
-        isPlayingPlayer
-          ? dispatch(setIsPlayingPlayer(false))
-          : dispatch(setIsPlayingPlayer(true));
+        playListId == currentPlayListId
+          ? isPlayingPlayer
+            ? dispatch(setIsPlayingPlayer(false))
+            : dispatch(setIsPlayingPlayer(true))
+          : dispatch(setNewPlayList());
       }}
     >
       <Image
         style={{ width: rw(w), height: rh(h) }}
-        source={btns[isPlayingPlayer ? "pause" : "play"]}
+        source={
+          btns[
+            playListId == currentPlayListId
+              ? isPlayingPlayer
+                ? "pause"
+                : "play"
+              : "play"
+          ]
+        }
         contentFit="contain"
       />
     </TouchableOpacity>
