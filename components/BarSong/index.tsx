@@ -1,19 +1,32 @@
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
 import { formatTime } from "@/services/formatTime";
-import { rf, rh, rw } from "@/utils/dimensions";
-import React, { memo } from "react";
+import { rf, rh } from "@/utils/dimensions";
+import Slider from "@react-native-community/slider";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-function BarSong({ duration }: { duration: number }) {
+export default function BarSong({ duration }: { duration: number }) {
+  const [position, setPosition] = useState(0);
+
   return (
-    <View style={styles.continer}>
-      <View style={styles.barContianer}>
-        <View style={styles.backBar}></View>
-        <View style={[styles.topBar, { width: rw(100) }]}></View>
-      </View>
+    <View>
+      <Slider
+        style={styles.slider}
+        minimumValue={0}
+        maximumValue={duration}
+        value={position}
+        minimumTrackTintColor={Colors.textPrimary}
+        maximumTrackTintColor={Colors.textSec}
+        thumbTintColor={Colors.textPrimary}
+        onValueChange={(value) => setPosition(value)}
+        onSlidingComplete={(value) => {
+          console.log("Seek to:", value);
+        }}
+      />
+
       <View style={styles.timeContianer}>
-        <Text style={styles.txtTime}>0:2</Text>
+        <Text style={styles.txtTime}>{formatTime(Math.floor(position))}</Text>
         <Text style={styles.txtTime}>{formatTime(duration)}</Text>
       </View>
     </View>
@@ -21,37 +34,18 @@ function BarSong({ duration }: { duration: number }) {
 }
 
 const styles = StyleSheet.create({
-  continer: {},
-  barContianer: {
-    flexDirection: "row",
-  },
-  backBar: {
-    backgroundColor: Colors.textSec,
-    width: rw(342),
-    height: rh(4),
-    borderRadius: rw(8),
-  },
-  topBar: {
-    position: "absolute",
-    backgroundColor: Colors.textPrimary,
-    height: rh(4),
-    borderRadius: rw(8),
-    left: rw(0),
-    top: rh(0),
-    zIndex: 1,
+  slider: {
+    width: "100%",
+    height: rh(40),
   },
   timeContianer: {
-    paddingTop: rh(9),
-    justifyContent: "space-between",
     flexDirection: "row",
+    justifyContent: "space-between",
+    paddingTop: rh(9),
   },
-
   txtTime: {
     fontFamily: Fonts.OpenSansRegular,
     color: Colors.textPrimary,
     fontSize: rf(14),
-    lineHeight: rh(16),
   },
 });
-
-export default memo(BarSong);

@@ -5,8 +5,6 @@ import { useQuery, UseQueryResult } from "@tanstack/react-query";
 async function fetchData(q: string) {
   try {
     const res = await axiosClient.get(`/search?q=${q}`);
-    console.log(res.data.data);
-
     return res.data.data;
   } catch (err: any) {
     throw err;
