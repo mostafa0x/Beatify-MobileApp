@@ -6,10 +6,8 @@ import { rf, rh } from "@/utils/dimensions";
 import Slider from "@react-native-community/slider";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { useDispatch } from "react-redux";
 
 export default function BarSong({ duration }: { duration: number }) {
-  const dispatch = useDispatch();
   const { player, position, setPosition } = usePlayerAudio();
 
   return (
@@ -17,7 +15,7 @@ export default function BarSong({ duration }: { duration: number }) {
       <Slider
         style={styles.slider}
         minimumValue={0}
-        maximumValue={30}
+        maximumValue={28}
         value={position}
         minimumTrackTintColor={Colors.textPrimary}
         maximumTrackTintColor={Colors.textSec}

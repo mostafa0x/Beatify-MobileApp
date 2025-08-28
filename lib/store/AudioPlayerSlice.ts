@@ -20,13 +20,27 @@ const AudioPlayerSlice = createSlice({
     setCurrentTrack: (state, action) => {
       state.cureentIndex = action.payload;
     },
-    setIsPlayingPlayer: (state) => {
-      state.isPlayingPlayer = state.isPlayingPlayer ? false : true;
-      console.log(state.isPlayingPlayer);
+
+    setCurrentIndex: (state, action) => {
+      if (action.payload == -1) {
+        if (state.cureentIndex < state.tracks.length - 1) {
+          state.cureentIndex = state.cureentIndex++;
+          state.currentTrack = state.tracks[state.cureentIndex++];
+        }
+      } else {
+        state.cureentIndex = action.payload;
+      }
+    },
+    setIsPlayingPlayer: (state, action) => {
+      state.isPlayingPlayer = action.payload;
     },
   },
 });
 
 export const AudioPlayerReducer = AudioPlayerSlice.reducer;
-export const { setCurrentTrack, setTracks, setIsPlayingPlayer } =
-  AudioPlayerSlice.actions;
+export const {
+  setCurrentTrack,
+  setTracks,
+  setIsPlayingPlayer,
+  setCurrentIndex,
+} = AudioPlayerSlice.actions;

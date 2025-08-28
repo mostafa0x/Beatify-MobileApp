@@ -10,11 +10,10 @@ import { Skeleton } from "moti/skeleton";
 import React, { memo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Portal } from "react-native-paper";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import CricelBtn from "../Icons/CricelBtn";
 
 function AudioPlayer() {
-  const dispatch = useDispatch();
   const pathName = usePathname();
 
   const { currentTrack } = useSelector(
@@ -22,7 +21,8 @@ function AudioPlayer() {
   );
   const { player, position, setPosition } = usePlayerAudio();
   return (
-    pathName !== "/Song" && (
+    pathName !== "/Song" &&
+    currentTrack && (
       <Portal>
         <View style={styles.container}>
           <View style={styles.top}>
@@ -33,9 +33,21 @@ function AudioPlayer() {
                   source={{ uri: currentTrack?.album?.cover_small }}
                 />
               </Skeleton>
-              <View>
-                <Text style={styles.songName}>{currentTrack?.title}</Text>
-                <Text style={styles.songMaker}>
+              <View style={{ flexShrink: 1 }}>
+                <Text
+                  numberOfLines={1}
+                  adjustsFontSizeToFit
+                  minimumFontScale={0.5}
+                  style={styles.songName}
+                >
+                  {currentTrack?.title}
+                </Text>
+                <Text
+                  numberOfLines={1}
+                  adjustsFontSizeToFit
+                  minimumFontScale={0.5}
+                  style={styles.songMaker}
+                >
                   {currentTrack?.artist?.name}
                 </Text>
               </View>
@@ -104,11 +116,13 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.OpenSansSemiBold,
     fontSize: rf(16),
     color: Colors.textPrimary,
+    width: rw(200),
   },
   songMaker: {
     fontFamily: Fonts.OpenSansRegular,
     fontSize: rf(14),
     color: Colors.textSec,
+    width: rw(200),
   },
   slider: {
     width: "100%",

@@ -1,4 +1,4 @@
-import { setIsPlayingPlayer } from "@/lib/store/AudioPlayerSlice";
+import { setCurrentIndex } from "@/lib/store/AudioPlayerSlice";
 import { StateType } from "@/types/store/StateType";
 import {
   AudioPlayer,
@@ -15,16 +15,18 @@ interface PlayerAudioType {
   status: AudioStatus | undefined;
   position: number;
   setPosition: React.Dispatch<React.SetStateAction<number>>;
+  pauseAudio: () => void;
+  playAudio: () => void;
 }
 
 const PlayerAudio = createContext<PlayerAudioType>({
   player: undefined,
   status: undefined,
   position: 0,
+  playAudio: () => {},
   setPosition: () => {},
+  pauseAudio: () => {},
 });
-
-export const usePlayerAudio = () => useContext(PlayerAudio);
 
 export default function PlayerAudioProvider({
   children,
@@ -34,39 +36,71 @@ export default function PlayerAudioProvider({
   const dispatch = useDispatch();
   const pathName = usePathname();
 
-  const { tracks, currentTrack, cureentIndex, isPlayingPlayer } = useSelector(
+  const { tracks, currentTrack, isPlayingPlayer } = useSelector(
     (state: StateType) => state.AudioPlayerReducer
   );
   const [position, setPosition] = useState(0);
   const player = useAudioPlayer({ uri: currentTrack?.preview });
   const status = useAudioPlayerStatus(player);
 
-  useEffect(() => {
-    if (isPlayingPlayer) {
+  function playAudio() {
+    if (player) {
       player.play();
-    } else {
+    }
+  }
+
+  function pauseAudio() {
+    if (player) {
       player.pause();
     }
-    setPosition(player.currentTime);
+  }
+
+  useEffect(() => {
+    if (player) {
+      isPlayingPlayer ? playAudio() : pauseAudio();
+    }
 
     return () => {};
   }, [isPlayingPlayer, player]);
 
   useEffect(() => {
-    setPosition(player.currentTime);
-    if (player.currentStatus.didJustFinish)
-      if (tracks.length < 0) {
-        dispatch(setIsPlayingPlayer());
-      } else {
-        dispatch(setIsPlayingPlayer());
-      }
+    if (!player) return;
+    player && setPosition(player.currentTime);
 
+    return () => {};
+  }, [player]);
+
+  useEffect(() => {
+    if (currentTrack?.preview == "") {
+      //dispatch(setIsPlayingPlayer());
+      dispatch(setCurrentIndex(-1));
+    }
+    setPosition(player.currentTime);
+    if (player.currentStatus.didJustFinish) {
+      if (tracks.length <= 0) {
+      } else {
+        dispatch(setCurrentIndex(-1));
+
+        // dispatch(setIsPlayingPlayer());
+      }
+    }
     return () => {};
   }, [status]);
 
   return (
-    <PlayerAudio.Provider value={{ player, status, position, setPosition }}>
+    <PlayerAudio.Provider
+      value={{
+        player,
+        status,
+        position,
+        setPosition,
+        pauseAudio,
+        playAudio,
+      }}
+    >
       {children}
     </PlayerAudio.Provider>
   );
 }
+
+export const usePlayerAudio = () => useContext(PlayerAudio);

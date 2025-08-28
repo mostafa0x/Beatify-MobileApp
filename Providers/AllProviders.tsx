@@ -14,6 +14,7 @@ export default function AllProviders({
       <ReactQueryProvider>
         <PlayerAudioProvider>
           {children}
+
           <AudioPlayer />
         </PlayerAudioProvider>
       </ReactQueryProvider>

@@ -17,16 +17,22 @@ export default function CricelBtn({
   size: sizeType;
 }) {
   const { w, h } = size;
+  const dispatch = useDispatch();
+  const { isPlayingPlayer } = useSelector(
+    (state: StateType) => state.AudioPlayerReducer
+  );
   const btns = {
     play: require("@/assets/images/playBtn.png"),
     pause: require("@/assets/images/pauseBtn.png"),
   };
-  const { isPlayingPlayer } = useSelector(
-    (state: StateType) => state.AudioPlayerReducer
-  );
-  const dispatch = useDispatch();
   return (
-    <TouchableOpacity onPress={() => dispatch(setIsPlayingPlayer())}>
+    <TouchableOpacity
+      onPress={() =>
+        isPlayingPlayer
+          ? dispatch(setIsPlayingPlayer(false))
+          : dispatch(setIsPlayingPlayer(true))
+      }
+    >
       <Image
         style={{ width: rw(w), height: rh(h) }}
         source={btns[isPlayingPlayer ? "pause" : "play"]}
