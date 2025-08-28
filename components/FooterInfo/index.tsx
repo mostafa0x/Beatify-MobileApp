@@ -1,12 +1,19 @@
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
+import { PlayListItemType } from "@/types/PlayListType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import React, { memo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import CricelBtn from "../Icons/CricelBtn";
 import LoveIcon from "../Icons/LoveIcon";
 
-function FooterInfo({ withLove }: { withLove?: boolean }) {
+function FooterInfo({
+  withLove,
+  data,
+}: {
+  withLove?: boolean;
+  data: PlayListItemType | undefined;
+}) {
   return (
     <View style={styles.footerInfo}>
       <View style={styles.leftSide}>
@@ -16,7 +23,7 @@ function FooterInfo({ withLove }: { withLove?: boolean }) {
           minimumFontScale={0.5}
           style={styles.playListName}
         >
-          R&B Playlist
+          {data?.title}
         </Text>
         <Text
           numberOfLines={1}
@@ -24,7 +31,7 @@ function FooterInfo({ withLove }: { withLove?: boolean }) {
           minimumFontScale={0.5}
           style={styles.playListPepole}
         >
-          Test
+          {data?.description}
         </Text>
       </View>
       <View style={styles.rigthSide}>

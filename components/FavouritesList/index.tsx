@@ -1,12 +1,13 @@
-import { rh } from "@/utils/dimensions";
+import { TrackType } from "@/types/PlayListType";
+import { rh, rw } from "@/utils/dimensions";
 import { FlashList } from "@shopify/flash-list";
 import React, { memo, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import FavouritesItem from "./item";
 
-function FavouritesList() {
+function FavouritesList({ data }: { data: TrackType[] | undefined }) {
   const renderItem = useCallback(
-    ({ item, index }: { item: any; index: number }) => {
+    ({ item, index }: { item: TrackType; index: number }) => {
       return <FavouritesItem item={item} />;
     },
     []
@@ -20,7 +21,7 @@ function FavouritesList() {
     <View style={styles.list}>
       <FlashList
         numColumns={1}
-        data={["Recent", "Top 50", "Chill", "R&B", "Festival", 6]}
+        data={data ?? []}
         keyExtractor={(item, index) => index.toString()}
         estimatedItemSize={56}
         renderItem={renderItem}
@@ -41,6 +42,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingBottom: rh(145),
+    paddingRight: rw(15),
   },
 });
 

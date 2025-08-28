@@ -1,12 +1,13 @@
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
+import { TrackType } from "@/types/PlayListType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import React, { memo } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-function FavouritesItem({ item }: { item: any }) {
+function FavouritesItem({ item }: { item: TrackType }) {
   return (
     <TouchableOpacity
       onPress={() => router.push("/Song" as any)}
@@ -16,12 +17,26 @@ function FavouritesItem({ item }: { item: any }) {
         <Image
           style={styles.img}
           source={{
-            uri: "https://cdn-images.dzcdn.net/images/artist/7251d980c823b1fe0e750df494182ec6/500x500-000000-80-0-0.jpg",
+            uri: item?.album.cover_small,
           }}
         />
         <View style={styles.titleContianer}>
-          <Text style={styles.nameSong}>FavouritesItem</Text>
-          <Text style={styles.pepole}>FavouritesItem</Text>
+          <Text
+            numberOfLines={1}
+            adjustsFontSizeToFit
+            minimumFontScale={0.7}
+            style={styles.nameSong}
+          >
+            {item?.title}
+          </Text>
+          <Text
+            numberOfLines={1}
+            adjustsFontSizeToFit
+            minimumFontScale={0.7}
+            style={styles.pepole}
+          >
+            {item?.artist?.name}
+          </Text>
         </View>
       </View>
       <View>
@@ -55,12 +70,14 @@ const styles = StyleSheet.create({
     fontSize: rf(18),
     color: Colors.textPrimary,
     lineHeight: rh(24),
+    width: rw(200),
   },
   pepole: {
     fontFamily: Fonts.OpenSansRegular,
     fontSize: rf(14),
     color: Colors.textSec,
     lineHeight: rh(16),
+    width: rw(200),
   },
   durn: {
     fontFamily: Fonts.OpenSansRegular,

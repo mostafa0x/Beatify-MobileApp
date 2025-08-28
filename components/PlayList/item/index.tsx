@@ -19,7 +19,14 @@ function PlayItem({
 
   return (
     <TouchableOpacity
-      onPress={() => router.push("/(tabs)/PlayListScreen" as any)}
+      onPress={() => {
+        if (!isLoading) {
+          router.push({
+            pathname: "/(tabs)/PlayListScreen" as any,
+            params: { id: item?.id },
+          });
+        }
+      }}
       style={styles.contianer}
     >
       <View style={styles.imgContiner}>
