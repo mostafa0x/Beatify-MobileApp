@@ -7,13 +7,14 @@ import useSong from "@/hook/useSong";
 import { rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
+import { Skeleton } from "moti/skeleton";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
 export default function SongScreen() {
   const { id } = useLocalSearchParams();
   const songId = Array.isArray(id) ? parseInt(id[0]) : parseInt(id);
-  const { data } = useSong(songId);
+  const { data, isLoading } = useSong(songId);
 
   return (
     <View style={styles.container}>
@@ -23,12 +24,14 @@ export default function SongScreen() {
         <AppBar />
       </View>
       <View>
-        <Image
-          style={styles.img}
-          source={{
-            uri: data?.album?.cover_big,
-          }}
-        />
+        <Skeleton show={isLoading}>
+          <Image
+            style={styles.img}
+            source={{
+              uri: data?.album?.cover_big,
+            }}
+          />
+        </Skeleton>
         <FooterInfo
           title={data?.title ?? "unknow"}
           description={data?.artist.name ?? "unknow"}

@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 export default function NotFoundScreen() {
   return (
     <View>
-      <Text>NotFoundScreen</Text>
+      <Text style={{ color: "white" }}>NotFoundScreen</Text>
     </View>
   );
 }

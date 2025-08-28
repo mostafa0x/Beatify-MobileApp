@@ -1,5 +1,6 @@
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
+import { formatTime } from "@/services/formatTime";
 import { TrackType } from "@/types/PlayListType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
@@ -60,7 +61,7 @@ function FavouritesItem({
       </View>
       {!isLoading && (
         <View>
-          <Text style={styles.durn}>0:22</Text>
+          <Text style={styles.durn}>{formatTime(item?.duration ?? 0)}</Text>
         </View>
       )}
     </TouchableOpacity>

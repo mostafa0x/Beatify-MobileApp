@@ -8,9 +8,11 @@ import FavouritesItem from "./item";
 function FavouritesList({
   data,
   isLoading,
+  from,
 }: {
   data: TrackType[] | undefined;
   isLoading: boolean;
+  from: "home" | "serach";
 }) {
   const renderItem = useCallback(
     ({ item }: { item: TrackType }) => {
@@ -24,10 +26,10 @@ function FavouritesList({
   }, []);
 
   return (
-    <View style={styles.list}>
+    <View style={[styles.list, from == "serach" && styles.listSerach]}>
       <FlashList
         numColumns={1}
-        data={isLoading ? Array(3) : data ?? []}
+        data={isLoading ? Array(4) : data ?? []}
         keyExtractor={(item, index) => index.toString()}
         estimatedItemSize={56}
         renderItem={renderItem}
@@ -42,6 +44,10 @@ const styles = StyleSheet.create({
   list: {
     width: "100%",
     height: "70%",
+  },
+  listSerach: {
+    width: "100%",
+    height: "100%",
   },
   itemSeparator: {
     height: rh(24),

@@ -1,6 +1,8 @@
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
+import { handleSerach } from "@/services/handleSerach";
 import { rf, rw } from "@/utils/dimensions";
+import { useRouter } from "expo-router";
 import React, { memo } from "react";
 import { StyleSheet } from "react-native";
 import { Searchbar } from "react-native-paper";
@@ -12,8 +14,11 @@ function SearchbarFC({
   serachValue: string;
   setSerachValue: any;
 }) {
+  const router = useRouter();
   return (
     <Searchbar
+      onIconPress={() => handleSerach(serachValue, router)}
+      onSubmitEditing={() => handleSerach(serachValue, router)}
       iconColor={Colors.iconColorPrimary}
       style={styles.searchbar}
       placeholder="Search song, playslist, artist..."

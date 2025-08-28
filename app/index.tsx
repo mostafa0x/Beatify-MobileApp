@@ -40,7 +40,7 @@ export default function HomeScreen() {
       <View style={styles.favouritesContiner}>
         <Text style={styles.textFavourite}>Your favourites</Text>
         <View style={styles.favouriteList}>
-          <FavouritesList data={[]} isLoading={false} />
+          <FavouritesList data={[]} isLoading={false} from="home" />
         </View>
       </View>
     </View>
