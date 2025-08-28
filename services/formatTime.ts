@@ -5,5 +5,5 @@ export function formatTime(seconds: number): string {
   const formattedMinutes = String(minutes);
   const formattedSeconds = String(remainingSeconds).padStart(2, "0");
 
-  return `${formattedMinutes}:${formattedSeconds}`;
+  return `${0}:${30}`;
 }

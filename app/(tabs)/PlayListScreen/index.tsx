@@ -26,7 +26,7 @@ export default function PlayListScreen() {
 
   useEffect(() => {
     if (data) {
-      dispatch(setTracks(data.tracks.data));
+      dispatch(setTracks({ id: playListId, data: data.tracks.data }));
     }
 
     return () => {};

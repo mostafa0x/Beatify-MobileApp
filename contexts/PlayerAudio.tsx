@@ -36,7 +36,7 @@ export default function PlayerAudioProvider({
   const dispatch = useDispatch();
   const pathName = usePathname();
 
-  const { tracks, currentTrack, isPlayingPlayer } = useSelector(
+  const { playListTracks, currentTrack, isPlayingPlayer } = useSelector(
     (state: StateType) => state.AudioPlayerReducer
   );
   const [position, setPosition] = useState(0);
@@ -72,16 +72,13 @@ export default function PlayerAudioProvider({
 
   useEffect(() => {
     if (currentTrack?.preview == "") {
-      //dispatch(setIsPlayingPlayer());
       dispatch(setCurrentIndex(-1));
     }
     setPosition(player.currentTime);
     if (player.currentStatus.didJustFinish) {
-      if (tracks.length <= 0) {
+      if (playListTracks.length <= 0) {
       } else {
         dispatch(setCurrentIndex(-1));
-
-        // dispatch(setIsPlayingPlayer());
       }
     }
     return () => {};

@@ -3,8 +3,8 @@ import { Fonts } from "@/constants/Fonts";
 import { rf, rh, rw } from "@/utils/dimensions";
 import React, { memo } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import CricelBtn from "../Icons/CricelBtn";
 import LoveIcon from "../Icons/LoveIcon";
+import PlayListBtn from "../Icons/PlayListBtn";
 
 function FooterInfo({
   withLove,
@@ -37,7 +37,7 @@ function FooterInfo({
       </View>
       <View style={styles.rigthSide}>
         <LoveIcon />
-        {withLove && <CricelBtn size={{ w: 56, h: 56 }} />}
+        {withLove && <PlayListBtn size={{ w: 56, h: 56 }} />}
       </View>
     </View>
   );
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.OpenSansSemiBold,
     color: Colors.textSec,
     fontSize: rf(16),
-    lineHeight: rh(16),
+    lineHeight: rh(22),
   },
   footerInfo: {
     marginTop: rh(39),

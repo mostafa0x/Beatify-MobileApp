@@ -7,7 +7,13 @@ import Slider from "@react-native-community/slider";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-export default function BarSong({ duration }: { duration: number }) {
+export default function BarSong({
+  duration,
+  isSame,
+}: {
+  duration: number;
+  isSame: boolean;
+}) {
   const { player, position, setPosition } = usePlayerAudio();
 
   return (
@@ -16,14 +22,15 @@ export default function BarSong({ duration }: { duration: number }) {
         style={styles.slider}
         minimumValue={0}
         maximumValue={28}
-        value={position}
+        value={isSame ? position : 0}
         minimumTrackTintColor={Colors.textPrimary}
         maximumTrackTintColor={Colors.textSec}
         thumbTintColor={Colors.textPrimary}
-        onValueChange={(value) => setPosition(value)}
+        onValueChange={(value) => isSame && setPosition(value)}
         onSlidingComplete={(value) => {
-          console.log("Seek to:", value);
-          player?.seekTo(value);
+          if (isSame) {
+            player?.seekTo(value);
+          }
         }}
       />
 
