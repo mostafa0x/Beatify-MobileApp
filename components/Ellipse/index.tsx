@@ -7,22 +7,24 @@ function Ellipse({
   onLeft,
   x,
   y,
-  type = 0,
+  type = 1,
 }: {
   onLeft: boolean;
   x: number;
   y: number;
-  type: number;
+  type: 1 | 2 | 3 | 4;
 }) {
   const imgs = {
-    0: require("@/assets/images/Ellipse.png"),
-    1: require("@/assets/images/Ellipse2.png"),
+    1: require("@/assets/images/Ellipse.png"),
+    2: require("@/assets/images/Ellipse2.png"),
+    3: require("@/assets/images/Ellipse3.png"),
+    4: require("@/assets/images/Ellipse4.png"),
   };
   return (
     <View style={[styles.container, { left: rw(x), top: rh(y) }]}>
       <Image
         style={[styles.img, onLeft && styles.img_left]}
-        source={type == 0 ? imgs[0] : imgs[1]}
+        source={imgs[type]}
       />
     </View>
   );

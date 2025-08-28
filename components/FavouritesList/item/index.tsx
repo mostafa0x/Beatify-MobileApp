@@ -2,12 +2,16 @@ import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
+import { router } from "expo-router";
 import React, { memo } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 function FavouritesItem({ item }: { item: any }) {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      onPress={() => router.push("/Song" as any)}
+      style={styles.container}
+    >
       <View style={styles.infoBox}>
         <Image
           style={styles.img}
@@ -23,7 +27,7 @@ function FavouritesItem({ item }: { item: any }) {
       <View>
         <Text style={styles.durn}>0:22</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
