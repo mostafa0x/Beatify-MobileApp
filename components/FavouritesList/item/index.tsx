@@ -4,44 +4,61 @@ import { TrackType } from "@/types/PlayListType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
 import { router } from "expo-router";
+import { Skeleton } from "moti/skeleton";
 import React, { memo } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-function FavouritesItem({ item }: { item: TrackType }) {
+function FavouritesItem({
+  item,
+  isLoading,
+}: {
+  item: TrackType;
+  isLoading: boolean;
+}) {
   return (
     <TouchableOpacity
       onPress={() => router.push("/Song" as any)}
       style={styles.container}
     >
       <View style={styles.infoBox}>
-        <Image
-          style={styles.img}
-          source={{
-            uri: item?.album.cover_small,
-          }}
-        />
-        <View style={styles.titleContianer}>
-          <Text
-            numberOfLines={1}
-            adjustsFontSizeToFit
-            minimumFontScale={0.7}
-            style={styles.nameSong}
-          >
-            {item?.title}
-          </Text>
-          <Text
-            numberOfLines={1}
-            adjustsFontSizeToFit
-            minimumFontScale={0.7}
-            style={styles.pepole}
-          >
-            {item?.artist?.name}
-          </Text>
+        <Skeleton show={isLoading}>
+          <Image
+            style={styles.img}
+            source={{
+              uri: item?.album.cover_small,
+            }}
+          />
+        </Skeleton>
+        <View
+          style={[styles.titleContianer, isLoading && { marginTop: rh(15) }]}
+        >
+          <Skeleton show={isLoading}>
+            <Text
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.7}
+              style={styles.nameSong}
+            >
+              {item?.title}
+            </Text>
+          </Skeleton>
+          {!isLoading && (
+            <Text
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.7}
+              style={styles.pepole}
+            >
+              {item?.artist?.name}
+            </Text>
+          )}
         </View>
       </View>
-      <View>
-        <Text style={styles.durn}>0:22</Text>
-      </View>
+      {!isLoading && (
+        <View>
+          <Text style={styles.durn}>0:22</Text>
+        </View>
+      )}
     </TouchableOpacity>
   );
 }

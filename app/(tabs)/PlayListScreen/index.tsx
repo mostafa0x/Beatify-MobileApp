@@ -8,6 +8,7 @@ import { PlayListItemType } from "@/types/PlayListType";
 import { rh, rw } from "@/utils/dimensions";
 import { ImageBackground } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
+import { Skeleton } from "moti/skeleton";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
@@ -18,28 +19,30 @@ interface hookType {
 export default function PlayListScreen() {
   const { id } = useLocalSearchParams();
   const playListId = Array.isArray(id) ? parseInt(id[0]) : parseInt(id);
-  const { data } = usePlayListItem(playListId);
+  const { data, isLoading } = usePlayListItem(playListId);
   return (
     <View>
       <Ellipse onLeft={false} x={0} y={0} type={1} />
-      <ImageBackground
-        style={styles.imgBack}
-        contentFit="fill"
-        source={{
-          uri: data?.picture_big,
-        }}
-      >
-        <LinearView>
-          <View style={styles.sectionTop}>
-            <AppBar />
-            <View style={styles.footer}>
-              <FooterInfo data={data} withLove />
+      <Skeleton show={isLoading} radius={rw(22)}>
+        <ImageBackground
+          style={styles.imgBack}
+          contentFit="fill"
+          source={{
+            uri: data?.picture_big,
+          }}
+        >
+          <LinearView>
+            <View style={styles.sectionTop}>
+              <AppBar />
+              <View style={styles.footer}>
+                <FooterInfo data={data} withLove />
+              </View>
             </View>
-          </View>
-        </LinearView>
-      </ImageBackground>
+          </LinearView>
+        </ImageBackground>
+      </Skeleton>
       <View style={styles.sectionBottom}>
-        <FavouritesList data={data?.tracks.data} />
+        <FavouritesList data={data?.tracks.data} isLoading={isLoading} />
       </View>
     </View>
   );

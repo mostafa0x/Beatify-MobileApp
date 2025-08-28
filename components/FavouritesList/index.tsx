@@ -5,12 +5,18 @@ import React, { memo, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import FavouritesItem from "./item";
 
-function FavouritesList({ data }: { data: TrackType[] | undefined }) {
+function FavouritesList({
+  data,
+  isLoading,
+}: {
+  data: TrackType[] | undefined;
+  isLoading: boolean;
+}) {
   const renderItem = useCallback(
     ({ item, index }: { item: TrackType; index: number }) => {
-      return <FavouritesItem item={item} />;
+      return <FavouritesItem item={item} isLoading={isLoading} />;
     },
-    []
+    [isLoading]
   );
 
   const ItemSeparator = useCallback(() => {
@@ -21,7 +27,7 @@ function FavouritesList({ data }: { data: TrackType[] | undefined }) {
     <View style={styles.list}>
       <FlashList
         numColumns={1}
-        data={data ?? []}
+        data={isLoading ? Array(3) : data ?? []}
         keyExtractor={(item, index) => index.toString()}
         estimatedItemSize={56}
         renderItem={renderItem}
