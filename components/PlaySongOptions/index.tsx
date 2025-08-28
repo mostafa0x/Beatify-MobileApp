@@ -9,7 +9,7 @@ export default function PlaySongOptions() {
   return (
     <View style={styles.container}>
       <SkipBackIcon />
-      <CricelBtn />
+      <CricelBtn type="play" size={{ w: 64, h: 64 }} />
       <SkipforwardICon />
     </View>
   );
