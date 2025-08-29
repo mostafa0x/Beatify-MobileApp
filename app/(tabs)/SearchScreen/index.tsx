@@ -7,12 +7,12 @@ import useSearch from "@/hook/useSearch";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function SearchScreen() {
   const { q } = useLocalSearchParams();
   const word = Array.isArray(q) ? q[0] : q;
-  const { data, isLoading } = useSearch(word);
+  const { data, isLoading, isError, refetch } = useSearch(word);
   return (
     <View style={styles.container}>
       <Ellipse onLeft={false} x={0} y={0} type={1} />
@@ -21,9 +21,23 @@ export default function SearchScreen() {
         <Text style={styles.title}>{word}</Text>
       </View>
 
-      <View style={styles.list}>
-        <FavouritesList data={data} isLoading={isLoading} from={"serach"} />
-      </View>
+      {isError ? (
+        <View style={styles.emptyContiner}>
+          <Text style={[styles.emptyTxt, isError && styles.emptyTxt_Error]}>
+            {isError ? " An error occurred" : "Empty"}
+          </Text>
+          <TouchableOpacity
+            style={styles.tryContaier}
+            onPress={() => refetch()}
+          >
+            <Text style={styles.try}>Try Again</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={styles.list}>
+          <FavouritesList data={data} isLoading={isLoading} from={"serach"} />
+        </View>
+      )}
     </View>
   );
 }
@@ -45,5 +59,32 @@ const styles = StyleSheet.create({
   },
   list: {
     marginTop: rh(50),
+  },
+  emptyContiner: {
+    marginTop: rh(180),
+    alignItems: "center",
+    justifyContent: "center",
+    gap: rh(15),
+  },
+  emptyTxt: {
+    fontFamily: Fonts.OpenSansSemiBold,
+    fontSize: rf(22),
+    color: Colors.textPrimary,
+  },
+  emptyTxt_Error: {
+    fontFamily: Fonts.OpenSansBold,
+    fontSize: rf(26),
+    color: Colors.errorColor,
+  },
+  tryContaier: {
+    borderWidth: rw(2),
+    borderRadius: rw(25),
+    borderColor: Colors.errorColor,
+    padding: rw(5),
+  },
+  try: {
+    fontFamily: Fonts.OpenSansRegular,
+    color: Colors.textSec,
+    fontSize: rf(14),
   },
 });

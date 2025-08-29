@@ -1,5 +1,5 @@
 import axios from "axios";
 export const axiosClient = axios.create({
   baseURL: "https://api.deezer.com",
-  timeout: 100,
+  timeout: 10000,
 });

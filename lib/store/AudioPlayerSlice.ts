@@ -42,6 +42,8 @@ const AudioPlayerSlice = createSlice({
       if (action.payload.type !== 0) {
         state.cureentIndex = 0;
         state.currentTrack = state.onTrack;
+        state.currentPlayList = [];
+        state.currentPlayListId = null;
         state.isPlayingPlayer = true;
       } else {
         let index = -1;
