@@ -1,8 +1,10 @@
+import { Colors } from "@/constants/Colors";
+import { Fonts } from "@/constants/Fonts";
 import { TrackType } from "@/types/PlayListType";
-import { rh, rw } from "@/utils/dimensions";
+import { rf, rh, rw } from "@/utils/dimensions";
 import { FlashList } from "@shopify/flash-list";
 import React, { memo, useCallback } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import FavouritesItem from "./item";
 
 function FavouritesList({
@@ -16,10 +18,17 @@ function FavouritesList({
 }) {
   const renderItem = useCallback(
     ({ item }: { item: TrackType }) => {
-      return <FavouritesItem item={item} isLoading={isLoading} />;
+      return <FavouritesItem item={item} isLoading={isLoading} from={from} />;
     },
     [isLoading]
   );
+  const ListEmpty = useCallback(() => {
+    return (
+      <View>
+        <Text style={styles.emptyTxt}>Empty</Text>
+      </View>
+    );
+  }, []);
 
   const ItemSeparator = useCallback(() => {
     return <View style={styles.itemSeparator}></View>;
@@ -35,6 +44,7 @@ function FavouritesList({
         renderItem={renderItem}
         ItemSeparatorComponent={ItemSeparator}
         contentContainerStyle={styles.contentContainer}
+        ListEmptyComponent={ListEmpty}
       />
     </View>
   );
@@ -55,6 +65,11 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingBottom: rh(145),
     paddingRight: rw(15),
+  },
+  emptyTxt: {
+    fontFamily: Fonts.OpenSansBold,
+    color: Colors.textSec,
+    fontSize: rf(22),
   },
 });
 

@@ -1,10 +1,11 @@
 import * as React from "react";
 import { memo } from "react";
 import Svg, { Path, SvgProps } from "react-native-svg";
-const LoveIcon = (props: SvgProps) => (
+const LoveIcon = ({ isLove, ...props }: SvgProps & { isLove: boolean }) => (
   <Svg width={24} height={24} fill="none" viewBox="0 0 24 24" {...props}>
     <Path
-      stroke="#fff"
+      fill={isLove ? "#ff0000" : undefined}
+      stroke={isLove ? "#ff0000" : "#fff"}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}

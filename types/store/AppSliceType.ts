@@ -1,6 +1,6 @@
-import { genreType } from "../genreType";
+import { TrackType } from "../PlayListType";
 
 export interface AppSliceType {
   genreActive: number;
-  genreList: genreType[];
+  favouritesList: TrackType[];
 }

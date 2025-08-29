@@ -16,7 +16,9 @@ import { useDispatch, useSelector } from "react-redux";
 export default function HomeScreen() {
   const dispatch = useDispatch();
   const [serachValue, setSerachValue] = useState("");
-  const { genreActive } = useSelector((state: StateType) => state.AppReducer);
+  const { genreActive, favouritesList } = useSelector(
+    (state: StateType) => state.AppReducer
+  );
   const { data, isLoading, isError, refetch } = usePlayListById(genreActive);
 
   useEffect(() => {
@@ -66,7 +68,7 @@ export default function HomeScreen() {
       <View style={styles.favouritesContiner}>
         <Text style={styles.textFavourite}>Your favourites</Text>
         <View style={styles.favouriteList}>
-          <FavouritesList data={[]} isLoading={false} from="home" />
+          <FavouritesList data={favouritesList} isLoading={false} from="home" />
         </View>
       </View>
     </View>

@@ -70,6 +70,7 @@ export default function SongScreen() {
               <FooterInfo
                 title={data?.title ?? "unknow"}
                 description={data?.artist.name ?? "unknow"}
+                song={data}
               />
               <View style={styles.barContainer}>
                 <BarSong

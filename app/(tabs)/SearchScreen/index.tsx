@@ -18,7 +18,14 @@ export default function SearchScreen() {
       <Ellipse onLeft={false} x={0} y={0} type={1} />
       <View style={styles.appBar}>
         <AppBar />
-        <Text style={styles.title}>{word}</Text>
+        <Text
+          adjustsFontSizeToFit
+          minimumFontScale={0.8}
+          numberOfLines={1}
+          style={styles.title}
+        >
+          {word}
+        </Text>
       </View>
 
       {isError ? (
@@ -56,6 +63,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.OpenSansBold,
     fontSize: rf(32),
     color: Colors.textPrimary,
+    width: rw(300),
   },
   list: {
     marginTop: rh(50),

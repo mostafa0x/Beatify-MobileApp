@@ -12,9 +12,11 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 function FavouritesItem({
   item,
   isLoading,
+  from,
 }: {
   item: TrackType;
   isLoading: boolean;
+  from: "home" | "serach";
 }) {
   return (
     <TouchableOpacity
