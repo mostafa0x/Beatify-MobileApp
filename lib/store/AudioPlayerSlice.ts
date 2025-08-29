@@ -43,7 +43,8 @@ const AudioPlayerSlice = createSlice({
         state.cureentIndex = index;
         state.currentTrack = state.playListTracks[index];
         state.currentPlayList = state.playListTracks;
-        state.currentPlayListId = state.currentPlayListId;
+        state.currentPlayListId = state.playListId;
+        state.isPlayingPlayer = true;
       }
     },
     setNextSong: (state) => {
@@ -53,6 +54,16 @@ const AudioPlayerSlice = createSlice({
         state.currentPlayListId = state.currentPlayListId;
       } else {
         state.cureentIndex = state.cureentIndex + 1;
+        state.currentTrack = state.currentPlayList[state.cureentIndex];
+      }
+    },
+    setPrevSong: (state) => {
+      if (state.cureentIndex <= 0) {
+        state.cureentIndex = state.currentPlayList.length - 1;
+        state.currentTrack =
+          state.currentPlayList[state.currentPlayList.length - 1];
+      } else {
+        state.cureentIndex = state.cureentIndex - 1;
         state.currentTrack = state.currentPlayList[state.cureentIndex];
       }
     },
@@ -72,4 +83,5 @@ export const {
   setPlay,
   setOnTrack,
   setNextSong,
+  setPrevSong,
 } = AudioPlayerSlice.actions;

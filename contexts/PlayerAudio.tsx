@@ -44,7 +44,7 @@ export default function PlayerAudioProvider({
   const status = useAudioPlayerStatus(player);
 
   function playAudio() {
-    if (player) {
+    if (player?.id) {
       player?.play();
     }
   }
@@ -71,7 +71,6 @@ export default function PlayerAudioProvider({
 
   useEffect(() => {
     const isJustFinish = player.currentStatus.didJustFinish;
-    //  console.log(status);
 
     let time: number | undefined = undefined;
     console.log(isJustFinish);

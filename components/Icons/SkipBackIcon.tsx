@@ -1,7 +1,7 @@
 import * as React from "react";
 import { memo } from "react";
 import Svg, { Path, SvgProps } from "react-native-svg";
-const SkipBackIcon = (props: SvgProps) => (
+const SkipBack = (props: SvgProps) => (
   <Svg width={24} height={24} viewBox="0 0 24 24" fill="none" {...props}>
     <Path
       fill="#fff"
@@ -20,4 +20,4 @@ const SkipBackIcon = (props: SvgProps) => (
     />
   </Svg>
 );
-export default memo(SkipBackIcon);
+export default memo(SkipBack);
