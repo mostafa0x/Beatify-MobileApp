@@ -71,11 +71,12 @@ export default function PlayerAudioProvider({
   }, [player]);
 
   useEffect(() => {
+    const isJustFinish = player.currentStatus.didJustFinish;
     if (currentTrack?.preview == "") {
       dispatch(setCurrentIndex(-1));
     }
     setPosition(player.currentTime);
-    if (player.currentStatus.didJustFinish) {
+    if (isJustFinish) {
       if (playListTracks.length <= 0) {
       } else {
         dispatch(setCurrentIndex(-1));

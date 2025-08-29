@@ -19,7 +19,7 @@ export default function SongScreen() {
   const { id } = useLocalSearchParams();
   const songId = Array.isArray(id) ? parseInt(id[0]) : parseInt(id);
   const { data, isLoading } = useSong(songId);
-  const { currentTrack } = useSelector(
+  const { currentTrack, cureentIndex } = useSelector(
     (state: StateType) => state.AudioPlayerReducer
   );
 

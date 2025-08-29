@@ -11,14 +11,14 @@ interface ActionTrackType {
 }
 
 const initialState: AudioPlayerSliceType = {
+  isPlayingPlayer: false,
+  onTrack: null,
   playListTracks: [],
   playListId: null,
-  isPlayingPlayer: false,
-  currentTrack: null,
   cureentIndex: 0,
+  currentTrack: null,
   currentPlayList: [],
   currentPlayListId: null,
-  onTrack: null,
 };
 
 const AudioPlayerSlice = createSlice({
@@ -63,9 +63,9 @@ const AudioPlayerSlice = createSlice({
 
     setCurrentIndex: (state, action) => {
       if (action.payload == -1) {
-        if (state.cureentIndex < state.playListTracks.length - 1) {
-          state.cureentIndex = state.cureentIndex++;
+        if (state.cureentIndex < state.currentPlayList.length - 1) {
           state.currentTrack = state.currentPlayList[state.cureentIndex++];
+          state.cureentIndex = state.cureentIndex++;
         }
       } else {
         state.cureentIndex = action.payload;
