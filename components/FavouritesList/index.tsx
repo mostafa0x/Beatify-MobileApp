@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     height: rh(24),
   },
   contentContainer: {
-    paddingBottom: rh(145),
+    paddingBottom: rh(190),
     paddingRight: rw(15),
   },
   emptyTxt: {

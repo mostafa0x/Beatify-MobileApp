@@ -34,7 +34,10 @@ export default function GenreList() {
 }
 
 const styles = StyleSheet.create({
-  list: {},
+  list: {
+    width: "100%",
+    height: "auto",
+  },
   itemSeparator: {
     width: rw(20),
   },

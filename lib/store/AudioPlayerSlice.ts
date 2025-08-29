@@ -64,6 +64,12 @@ const AudioPlayerSlice = createSlice({
           state.currentPlayList = state.playListTracks;
           state.currentPlayListId = state.playListId;
           state.isPlayingPlayer = true;
+        } else {
+          state.cureentIndex = 0;
+          state.currentTrack = state.onTrack;
+          state.currentPlayList = [];
+          state.currentPlayListId = null;
+          state.isPlayingPlayer = true;
         }
       }
     },

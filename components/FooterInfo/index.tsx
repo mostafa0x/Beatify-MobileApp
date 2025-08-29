@@ -1,14 +1,14 @@
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
+import { useAppDispatch } from "@/hook/useAppDispatch";
 import {
-  pushToFavouritesList,
-  removeFromFavouritesList,
+  removeFromStoragefavourites,
+  setInStrogefavourites,
 } from "@/lib/store/AppSlice";
 import { SongType } from "@/types/SongType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import React, { memo } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { useDispatch } from "react-redux";
 import LoveIcon from "../Icons/LoveIcon";
 import PlayListBtn from "../Icons/PlayListBtn";
 
@@ -25,7 +25,7 @@ function FooterInfo({
   song: SongType | undefined;
   isLoved: boolean;
 }) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   return (
     <View style={styles.footerInfo}>
@@ -49,11 +49,13 @@ function FooterInfo({
       </View>
       <View style={styles.rigthSide}>
         <TouchableOpacity
-          onPress={() =>
-            isLoved
-              ? dispatch(removeFromFavouritesList(song?.id))
-              : dispatch(pushToFavouritesList(song))
-          }
+          onPress={() => {
+            if (isLoved) {
+              dispatch(removeFromStoragefavourites(song?.id ?? 0));
+            } else {
+              dispatch(setInStrogefavourites(song));
+            }
+          }}
         >
           <LoveIcon isLove={isLoved} />
         </TouchableOpacity>

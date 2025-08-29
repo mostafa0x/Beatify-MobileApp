@@ -5,16 +5,18 @@ import PlayList from "@/components/PlayList";
 import SearchbarFC from "@/components/SearchbarFC";
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
+import { useAppDispatch } from "@/hook/useAppDispatch";
 import usePlayListById from "@/hook/usePlayListById";
+import { getInStrogefavourites } from "@/lib/store/AppSlice";
 import { clearPlayList } from "@/lib/store/AudioPlayerSlice";
 import { StateType } from "@/types/store/StateType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function HomeScreen() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [serachValue, setSerachValue] = useState("");
   const { genreActive, favouritesList } = useSelector(
     (state: StateType) => state.AppReducer
@@ -22,6 +24,7 @@ export default function HomeScreen() {
   const { data, isLoading, isError, refetch } = usePlayListById(genreActive);
 
   useEffect(() => {
+    dispatch(getInStrogefavourites());
     return () => {
       dispatch(clearPlayList());
     };
@@ -40,7 +43,6 @@ export default function HomeScreen() {
           setSerachValue={setSerachValue}
         />
       </View>
-
       <View style={styles.genreList}>
         <GenreList />
       </View>
