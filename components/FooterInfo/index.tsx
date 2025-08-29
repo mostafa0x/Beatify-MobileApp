@@ -18,12 +18,14 @@ function FooterInfo({
   description,
   song,
   isLoved,
+  btnShow,
 }: {
   withLove?: boolean;
   title: string;
   description: string;
   song: SongType | undefined;
   isLoved: boolean;
+  btnShow: boolean;
 }) {
   const dispatch = useAppDispatch();
 
@@ -48,18 +50,20 @@ function FooterInfo({
         </Text>
       </View>
       <View style={styles.rigthSide}>
-        <TouchableOpacity
-          onPress={() => {
-            if (isLoved) {
-              dispatch(removeFromStoragefavourites(song?.id ?? 0));
-            } else {
-              dispatch(setInStrogefavourites(song));
-            }
-          }}
-        >
-          <LoveIcon isLove={isLoved} />
-        </TouchableOpacity>
-        {withLove && <PlayListBtn size={{ w: 56, h: 56 }} />}
+        {withLove && (
+          <TouchableOpacity
+            onPress={() => {
+              if (isLoved) {
+                dispatch(removeFromStoragefavourites(song?.id ?? 0));
+              } else {
+                dispatch(setInStrogefavourites(song));
+              }
+            }}
+          >
+            <LoveIcon isLove={isLoved} />
+          </TouchableOpacity>
+        )}
+        {btnShow && <PlayListBtn size={{ w: 56, h: 56 }} />}
       </View>
     </View>
   );

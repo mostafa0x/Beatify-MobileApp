@@ -360,6 +360,7 @@ export const setInStrogefavourites = createAsyncThunk(
 export const removeFromStoragefavourites = createAsyncThunk(
   "AppSlice/removeFromStoragefavourites",
   async (songId: number, thurkApi) => {
+    if (!songId) throw "error";
     const state = thurkApi.getState() as RootState;
     const song = await removeSongFromFavourites(
       songId,

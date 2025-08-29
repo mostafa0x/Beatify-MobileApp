@@ -16,7 +16,7 @@ function FavouritesItem({
 }: {
   item: TrackType;
   isLoading: boolean;
-  from: "home" | "serach";
+  from: "home" | "serach" | "playlist";
 }) {
   return (
     <TouchableOpacity

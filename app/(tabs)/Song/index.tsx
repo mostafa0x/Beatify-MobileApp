@@ -81,6 +81,8 @@ export default function SongScreen() {
                 description={data?.artist.name ?? "unknow"}
                 song={data}
                 isLoved={isLoved}
+                withLove={true}
+                btnShow={false}
               />
               <View style={styles.barContainer}>
                 <BarSong

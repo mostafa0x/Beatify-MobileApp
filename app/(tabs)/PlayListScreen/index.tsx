@@ -71,7 +71,10 @@ export default function PlayListScreen() {
                     <FooterInfo
                       title={data?.title ?? "unknow"}
                       description={data?.description ?? "unknow"}
-                      withLove
+                      withLove={false}
+                      song={undefined}
+                      isLoved={false}
+                      btnShow
                     />
                   </View>
                 </View>
@@ -82,7 +85,7 @@ export default function PlayListScreen() {
             <FavouritesList
               data={data?.tracks.data}
               isLoading={isLoading}
-              from={"home"}
+              from="playlist"
             />
           </View>
         </>
