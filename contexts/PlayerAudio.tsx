@@ -1,4 +1,4 @@
-import { setCurrentIndex } from "@/lib/store/AudioPlayerSlice";
+import { setNextSong } from "@/lib/store/AudioPlayerSlice";
 import { StateType } from "@/types/store/StateType";
 import {
   AudioPlayer,
@@ -45,13 +45,12 @@ export default function PlayerAudioProvider({
 
   function playAudio() {
     if (player) {
-      player.play();
+      player?.play();
     }
   }
-
   function pauseAudio() {
     if (player && player.currentStatus.isLoaded) {
-      player.pause();
+      player?.pause();
     }
   }
 
@@ -72,18 +71,27 @@ export default function PlayerAudioProvider({
 
   useEffect(() => {
     const isJustFinish = player.currentStatus.didJustFinish;
+    //  console.log(status);
+
+    let time: number | undefined = undefined;
+    console.log(isJustFinish);
+    if (isJustFinish) {
+      dispatch(setNextSong());
+    }
     if (currentTrack?.preview == "") {
-      dispatch(setCurrentIndex(-1));
+      dispatch(setNextSong());
     }
     setPosition(player.currentTime);
-    if (isJustFinish) {
-      if (playListTracks.length <= 0) {
-      } else {
-        dispatch(setCurrentIndex(-1));
-      }
-    }
-    return () => {};
-  }, [status]);
+    // if (isJustFinish) {
+    //   if (playListTracks.length <= 0) {
+    //   } else {
+    //     dispatch(setCurrentIndex(-1));
+    //   }
+    // }
+    return () => {
+      clearTimeout(time);
+    };
+  }, [status, player]);
 
   return (
     <PlayerAudio.Provider

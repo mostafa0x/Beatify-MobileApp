@@ -1,7 +1,4 @@
-import {
-  setIsPlayingPlayer,
-  setPlaySongInSamePlayList,
-} from "@/lib/store/AudioPlayerSlice";
+import { setIsPlayingPlayer, setPlay } from "@/lib/store/AudioPlayerSlice";
 import { StateType } from "@/types/store/StateType";
 import { rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
@@ -34,7 +31,7 @@ export default function SongPlayBtn({
           ? isPlayingPlayer
             ? dispatch(setIsPlayingPlayer(false))
             : dispatch(setIsPlayingPlayer(true))
-          : dispatch(setPlaySongInSamePlayList(onTrack?.id))
+          : dispatch(setPlay(onTrack?.id))
       }
     >
       <Image

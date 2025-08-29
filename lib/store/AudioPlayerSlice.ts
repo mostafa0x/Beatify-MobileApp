@@ -28,66 +28,48 @@ const AudioPlayerSlice = createSlice({
     setTracks: (state, action: ActionTrackType) => {
       state.playListTracks = action.payload.data;
       state.playListId = action.payload.id;
-      if (state.currentTrack == null) {
-        state.currentPlayList = action.payload.data;
-        state.currentPlayListId = action.payload.id;
-        state.currentTrack = action.payload.data[0];
-        state.cureentIndex = 0;
-      }
     },
-    setNewPlayList: (state) => {
-      state.currentPlayList = state.playListTracks;
-      state.currentPlayListId = state.playListId;
-      state.currentTrack = state.playListTracks[0];
-      state.cureentIndex = 0;
-      state.isPlayingPlayer = true;
-    },
-    setOnTrack: (state, action) => {
-      state.onTrack = action.payload;
-    },
-    setPlaySongInSamePlayList: (state, action) => {
-      const songId = action.payload;
-      const track = state.currentPlayList.find((item) => item?.id == songId);
-      const indexSong = state.currentPlayList.findIndex(
-        (item) => item.id == songId
-      );
-      if (track && indexSong) {
-        state.currentTrack = track;
-        state.cureentIndex = indexSong;
-        state.isPlayingPlayer = true;
-      }
-    },
-    setCurrentTrack: (state, action) => {
-      state.cureentIndex = action.payload;
-    },
-
-    setCurrentIndex: (state, action) => {
-      if (action.payload == -1) {
-        if (state.cureentIndex < state.currentPlayList.length - 1) {
-          state.currentTrack = state.currentPlayList[state.cureentIndex++];
-          state.cureentIndex = state.cureentIndex++;
-        }
+    setPlay: (state, action) => {
+      let index = -1;
+      if (action.payload !== -1) {
+        index = state.playListTracks.findIndex(
+          (item) => item?.id == action.payload
+        );
       } else {
-        state.cureentIndex = action.payload;
+        index = 0;
+      }
+
+      if (index !== -1) {
+        state.cureentIndex = index;
+        state.currentTrack = state.playListTracks[index];
+        state.currentPlayList = state.playListTracks;
+        state.currentPlayListId = state.currentPlayListId;
+      }
+    },
+    setNextSong: (state) => {
+      if (state.cureentIndex >= state.currentPlayList.length - 1) {
+        state.cureentIndex = 0;
+        state.currentTrack = state.currentPlayList[0];
+        state.currentPlayListId = state.currentPlayListId;
+      } else {
+        state.cureentIndex = state.cureentIndex + 1;
+        state.currentTrack = state.currentPlayList[state.cureentIndex];
       }
     },
     setIsPlayingPlayer: (state, action) => {
       state.isPlayingPlayer = action.payload;
     },
-    setPlayListId: (state, action) => {
-      state.playListId = action.payload;
+    setOnTrack: (state, action) => {
+      state.onTrack = action.payload;
     },
   },
 });
 
 export const AudioPlayerReducer = AudioPlayerSlice.reducer;
 export const {
-  setCurrentTrack,
   setTracks,
   setIsPlayingPlayer,
-  setCurrentIndex,
-  setPlayListId,
-  setNewPlayList,
+  setPlay,
   setOnTrack,
-  setPlaySongInSamePlayList,
+  setNextSong,
 } = AudioPlayerSlice.actions;
