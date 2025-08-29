@@ -7,7 +7,7 @@ async function fetchData(q: string) {
     const res = await axiosClient.get(`/search?q=${q}`);
     return res.data.data;
   } catch (err: any) {
-    throw err;
+    throw err ?? " An error occurred";
   }
 }
 

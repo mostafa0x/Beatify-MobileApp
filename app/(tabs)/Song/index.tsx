@@ -7,6 +7,7 @@ import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
 import useSong from "@/hook/useSong";
 import { setIsLoadingSong, setOnTrack } from "@/lib/store/AudioPlayerSlice";
+import handleIsSongLoved from "@/services/handleIsSongLoved";
 import { StateType } from "@/types/store/StateType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
@@ -21,18 +22,26 @@ export default function SongScreen() {
   const { id } = useLocalSearchParams();
   const songId = Array.isArray(id) ? parseInt(id[0]) : parseInt(id);
   const { data, isLoading, isError, refetch } = useSong(songId);
+  const [isLoved, setIsLoved] = useState(false);
   const { currentTrack, cureentIndex } = useSelector(
     (state: StateType) => state.AudioPlayerReducer
   );
+  const { favouritesList } = useSelector(
+    (state: StateType) => state.AppReducer
+  );
   const [isLoadingImg, setIsLoadingImg] = useState(true);
   useEffect(() => {
-    data && dipatch(setOnTrack(data));
+    if (data) {
+      dipatch(setOnTrack(data));
+      setIsLoved(handleIsSongLoved(favouritesList, data.id));
+    }
     dipatch(setIsLoadingSong(isLoading));
     return () => {
       dipatch(setOnTrack(null));
       dipatch(setIsLoadingSong(false));
+      setIsLoved(false);
     };
-  }, [data, isLoading]);
+  }, [data, isLoading, favouritesList]);
 
   return (
     <View style={styles.container}>
@@ -71,6 +80,7 @@ export default function SongScreen() {
                 title={data?.title ?? "unknow"}
                 description={data?.artist.name ?? "unknow"}
                 song={data}
+                isLoved={isLoved}
               />
               <View style={styles.barContainer}>
                 <BarSong

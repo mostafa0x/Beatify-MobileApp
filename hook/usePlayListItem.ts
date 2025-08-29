@@ -8,7 +8,7 @@ async function fetchData(playlistId: number) {
 
     return res.data;
   } catch (err: any) {
-    throw err;
+    throw err ?? " An error occurred";
   }
 }
 

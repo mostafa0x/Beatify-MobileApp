@@ -1,6 +1,9 @@
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
-import { pushToFavouritesList } from "@/lib/store/AppSlice";
+import {
+  pushToFavouritesList,
+  removeFromFavouritesList,
+} from "@/lib/store/AppSlice";
 import { SongType } from "@/types/SongType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import React, { memo } from "react";
@@ -14,13 +17,16 @@ function FooterInfo({
   title,
   description,
   song,
+  isLoved,
 }: {
   withLove?: boolean;
   title: string;
   description: string;
   song: SongType | undefined;
+  isLoved: boolean;
 }) {
   const dispatch = useDispatch();
+
   return (
     <View style={styles.footerInfo}>
       <View style={styles.leftSide}>
@@ -42,8 +48,14 @@ function FooterInfo({
         </Text>
       </View>
       <View style={styles.rigthSide}>
-        <TouchableOpacity onPress={() => dispatch(pushToFavouritesList(song))}>
-          <LoveIcon isLove={false} />
+        <TouchableOpacity
+          onPress={() =>
+            isLoved
+              ? dispatch(removeFromFavouritesList(song?.id))
+              : dispatch(pushToFavouritesList(song))
+          }
+        >
+          <LoveIcon isLove={isLoved} />
         </TouchableOpacity>
         {withLove && <PlayListBtn size={{ w: 56, h: 56 }} />}
       </View>

@@ -1,6 +1,7 @@
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
 import { TrackType } from "@/types/PlayListType";
+import { SongType } from "@/types/SongType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { FlashList } from "@shopify/flash-list";
 import React, { memo, useCallback } from "react";
@@ -12,7 +13,7 @@ function FavouritesList({
   isLoading,
   from,
 }: {
-  data: TrackType[] | undefined;
+  data: SongType[] | undefined;
   isLoading: boolean;
   from: "home" | "serach";
 }) {

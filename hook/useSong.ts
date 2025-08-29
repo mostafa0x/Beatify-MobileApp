@@ -7,7 +7,7 @@ async function fetchData(songId: number) {
     const res = await axiosClient.get(`/track/${songId}`);
     return res.data;
   } catch (err: any) {
-    throw err;
+    throw err ?? " An error occurred";
   }
 }
 

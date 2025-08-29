@@ -19,9 +19,19 @@ const AppSlice = createSlice({
     pushToFavouritesList: (state, action) => {
       state.favouritesList = [action.payload, ...state.favouritesList];
     },
+    removeFromFavouritesList: (state, action) => {
+      const newOne = state.favouritesList.filter(
+        (song) => song.id !== action.payload
+      );
+      state.favouritesList = newOne;
+    },
   },
 });
 
 export const AppReducer = AppSlice.reducer;
-export const { setGenreActive, setFavouritesList, pushToFavouritesList } =
-  AppSlice.actions;
+export const {
+  setGenreActive,
+  setFavouritesList,
+  pushToFavouritesList,
+  removeFromFavouritesList,
+} = AppSlice.actions;
