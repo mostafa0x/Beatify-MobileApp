@@ -1,20 +1,24 @@
+import { Colors } from "@/constants/Colors";
+import { Fonts } from "@/constants/Fonts";
 import { PlayListType } from "@/types/PlayListType";
-import { rw } from "@/utils/dimensions";
+import { rf, rh, rw } from "@/utils/dimensions";
 import { FlashList } from "@shopify/flash-list";
 import React, { useCallback, useEffect, useRef } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import PlayItem from "./item";
 export default function PlayList({
   data,
   isLoading,
+  isError,
 }: {
   data: PlayListType[];
   isLoading: boolean;
+  isError: boolean;
 }) {
   const listRef = useRef<FlashList<PlayListType>>(null);
 
   const renderItem = useCallback(
-    ({ item, index }: { item: PlayListType; index: number }) => {
+    ({ item }: { item: PlayListType }) => {
       return <PlayItem item={item} isLoading={isLoading} />;
     },
     [isLoading]
@@ -23,6 +27,16 @@ export default function PlayList({
   const ItemSeparator = useCallback(() => {
     return <View style={styles.itemSeparator}></View>;
   }, []);
+
+  const ListEmpty = useCallback(() => {
+    return (
+      <View style={styles.emptyContiner}>
+        <Text style={[styles.emptyTxt, isError && styles.emptyTxt_Error]}>
+          {isError ? " An error occurred" : "Empty"}
+        </Text>
+      </View>
+    );
+  }, [isError]);
 
   useEffect(() => {
     if (listRef.current && data) {
@@ -35,7 +49,7 @@ export default function PlayList({
       <FlashList
         ref={listRef}
         horizontal
-        data={isLoading ? Array(2) : data}
+        data={data}
         keyExtractor={(item, index) =>
           item?.id ? item?.id?.toString() : index.toString()
         }
@@ -44,6 +58,7 @@ export default function PlayList({
         showsHorizontalScrollIndicator={false}
         ItemSeparatorComponent={ItemSeparator}
         contentContainerStyle={styles.contentContainer}
+        ListEmptyComponent={ListEmpty}
       />
     </View>
   );
@@ -54,10 +69,24 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "auto",
   },
+
   itemSeparator: {
     width: rw(20),
   },
   contentContainer: {
     paddingHorizontal: rw(24),
+  },
+  emptyContiner: {
+    marginTop: rh(20),
+  },
+  emptyTxt: {
+    fontFamily: Fonts.OpenSansSemiBold,
+    fontSize: rf(22),
+    color: Colors.textPrimary,
+  },
+  emptyTxt_Error: {
+    fontFamily: Fonts.OpenSansBold,
+    fontSize: rf(22),
+    color: Colors.errorColor,
   },
 });

@@ -10,14 +10,14 @@ import { clearPlayList } from "@/lib/store/AudioPlayerSlice";
 import { StateType } from "@/types/store/StateType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
   const [serachValue, setSerachValue] = useState("");
   const { genreActive } = useSelector((state: StateType) => state.AppReducer);
-  const { data, isLoading } = usePlayListById(genreActive);
+  const { data, isLoading, isError, refetch } = usePlayListById(genreActive);
 
   useEffect(() => {
     return () => {
@@ -42,9 +42,27 @@ export default function HomeScreen() {
       <View style={styles.genreList}>
         <GenreList />
       </View>
-      <View style={styles.playList}>
-        <PlayList data={data} isLoading={isLoading} />
-      </View>
+      {isError ? (
+        <View style={styles.emptyContiner}>
+          <Text style={[styles.emptyTxt, isError && styles.emptyTxt_Error]}>
+            {isError ? " An error occurred" : "Empty"}
+          </Text>
+          <TouchableOpacity
+            style={styles.tryContaier}
+            onPress={() => refetch()}
+          >
+            <Text style={styles.try}>Try Again</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={styles.playList}>
+          <PlayList
+            data={isError ? [] : isLoading ? Array(3) : data}
+            isLoading={isLoading}
+            isError={isError}
+          />
+        </View>
+      )}
       <View style={styles.favouritesContiner}>
         <Text style={styles.textFavourite}>Your favourites</Text>
         <View style={styles.favouriteList}>
@@ -95,5 +113,33 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.OpenSansSemiBold,
     color: Colors.textPrimary,
     fontSize: rf(18),
+  },
+  emptyContiner: {
+    paddingHorizontal: rw(24),
+    marginTop: rh(40),
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  emptyTxt: {
+    fontFamily: Fonts.OpenSansSemiBold,
+    fontSize: rf(22),
+    color: Colors.textPrimary,
+  },
+  emptyTxt_Error: {
+    fontFamily: Fonts.OpenSansBold,
+    fontSize: rf(22),
+    color: Colors.errorColor,
+  },
+  tryContaier: {
+    borderWidth: rw(2),
+    borderRadius: rw(25),
+    borderColor: Colors.errorColor,
+    padding: rw(5),
+  },
+  try: {
+    fontFamily: Fonts.OpenSansRegular,
+    color: Colors.textSec,
+    fontSize: rf(12),
   },
 });

@@ -6,7 +6,9 @@ async function fetachData(playListId: number) {
     const res = await axiosClient.get(`/chart/${playListId}/playlists`);
     return res.data.data;
   } catch (err: any) {
-    throw err;
+    console.log(err);
+
+    throw err ?? "Error";
   }
 }
 

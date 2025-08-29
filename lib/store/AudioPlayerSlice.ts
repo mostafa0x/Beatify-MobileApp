@@ -27,7 +27,7 @@ const initialState: AudioPlayerSliceType = {
   currentTrack: null,
   currentPlayList: [],
   currentPlayListId: null,
-  isLoadingSong: true,
+  isLoadingSong: false,
 };
 
 const AudioPlayerSlice = createSlice({

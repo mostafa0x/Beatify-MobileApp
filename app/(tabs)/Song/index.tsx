@@ -28,6 +28,7 @@ export default function SongScreen() {
     dipatch(setIsLoadingSong(isLoading));
     return () => {
       dipatch(setOnTrack(null));
+      dipatch(setIsLoadingSong(false));
     };
   }, [data, isLoading]);
 
