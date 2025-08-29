@@ -14,7 +14,7 @@ interface ActionPlayType {
   type: string;
   payload: {
     id: number;
-    type: number;
+    type?: number;
   };
 }
 
@@ -39,7 +39,11 @@ const AudioPlayerSlice = createSlice({
       state.playListId = action.payload.id;
     },
     setPlay: (state, action: ActionPlayType) => {
-      if (action.payload.type !== 0) {
+      const childFromList = state.currentPlayList.find(
+        (item) => item.id == action.payload.id
+      );
+
+      if (!childFromList && state.currentTrack && action.payload.type !== 1) {
         state.cureentIndex = 0;
         state.currentTrack = state.onTrack;
         state.currentPlayList = [];

@@ -33,7 +33,11 @@ export default function SongPlayBtn({
           ? isPlayingPlayer
             ? dispatch(setIsPlayingPlayer(false))
             : dispatch(setIsPlayingPlayer(true))
-          : dispatch(setPlay({ id: onTrack?.id ?? 0, type: 1 }));
+          : dispatch(
+              setPlay({
+                id: onTrack?.id ?? 0,
+              })
+            );
       }}
     >
       <Image
