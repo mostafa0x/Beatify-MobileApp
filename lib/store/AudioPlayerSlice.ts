@@ -10,6 +10,14 @@ interface ActionTrackType {
   };
 }
 
+interface ActionPlayType {
+  type: string;
+  payload: {
+    id: number;
+    type: number;
+  };
+}
+
 const initialState: AudioPlayerSliceType = {
   isPlayingPlayer: false,
   onTrack: null,
@@ -30,32 +38,41 @@ const AudioPlayerSlice = createSlice({
       state.playListTracks = action.payload.data;
       state.playListId = action.payload.id;
     },
-    setPlay: (state, action) => {
-      let index = -1;
-      if (action.payload !== -1) {
-        index = state.playListTracks.findIndex(
-          (item) => item?.id == action.payload
-        );
-      } else {
-        index = 0;
-      }
-
-      if (index !== -1) {
-        state.cureentIndex = index;
-        state.currentTrack = state.playListTracks[index];
-        state.currentPlayList = state.playListTracks;
-        state.currentPlayListId = state.playListId;
+    setPlay: (state, action: ActionPlayType) => {
+      if (action.payload.type !== 0) {
+        state.cureentIndex = 0;
+        state.currentTrack = state.onTrack;
         state.isPlayingPlayer = true;
+      } else {
+        let index = -1;
+        if (action.payload.id !== -1) {
+          index = state.playListTracks.findIndex(
+            (item) => item?.id == action.payload.id
+          );
+        } else {
+          index = 0;
+        }
+        if (index !== -1) {
+          state.cureentIndex = index;
+          state.currentTrack = state.playListTracks[index];
+          state.currentPlayList = state.playListTracks;
+          state.currentPlayListId = state.playListId;
+          state.isPlayingPlayer = true;
+        }
       }
     },
     setNextSong: (state) => {
-      if (state.cureentIndex >= state.currentPlayList.length - 1) {
-        state.cureentIndex = 0;
-        state.currentTrack = state.currentPlayList[0];
-        state.currentPlayListId = state.currentPlayListId;
+      if (state.currentPlayList.length > 0) {
+        if (state.cureentIndex >= state.currentPlayList.length - 1) {
+          state.cureentIndex = 0;
+          state.currentTrack = state.currentPlayList[0];
+          state.currentPlayListId = state.currentPlayListId;
+        } else {
+          state.cureentIndex = state.cureentIndex + 1;
+          state.currentTrack = state.currentPlayList[state.cureentIndex];
+        }
       } else {
-        state.cureentIndex = state.cureentIndex + 1;
-        state.currentTrack = state.currentPlayList[state.cureentIndex];
+        state.isPlayingPlayer = false;
       }
     },
     setPrevSong: (state) => {
@@ -77,6 +94,10 @@ const AudioPlayerSlice = createSlice({
     setIsLoadingSong: (state, action) => {
       state.isLoadingSong = action.payload;
     },
+    clearPlayList: (state) => {
+      state.playListId = null;
+      state.playListTracks = [];
+    },
   },
 });
 
@@ -89,4 +110,5 @@ export const {
   setNextSong,
   setPrevSong,
   setIsLoadingSong,
+  clearPlayList,
 } = AudioPlayerSlice.actions;

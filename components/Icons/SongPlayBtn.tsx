@@ -2,6 +2,7 @@ import { setIsPlayingPlayer, setPlay } from "@/lib/store/AudioPlayerSlice";
 import { StateType } from "@/types/store/StateType";
 import { rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
+import { usePathname } from "expo-router";
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,6 +19,7 @@ export default function SongPlayBtn({
 }) {
   const { w, h } = size;
   const dispatch = useDispatch();
+  const pathName = usePathname();
   const { isPlayingPlayer, currentTrack, currentPlayList, onTrack } =
     useSelector((state: StateType) => state.AudioPlayerReducer);
   const btns = {
@@ -26,13 +28,13 @@ export default function SongPlayBtn({
   };
   return (
     <TouchableOpacity
-      onPress={() =>
+      onPress={() => {
         currentTrack?.id == onTrack?.id
           ? isPlayingPlayer
             ? dispatch(setIsPlayingPlayer(false))
             : dispatch(setIsPlayingPlayer(true))
-          : dispatch(setPlay(onTrack?.id))
-      }
+          : dispatch(setPlay({ id: onTrack?.id ?? 0, type: 1 }));
+      }}
     >
       <Image
         style={{ width: rw(w), height: rh(h) }}

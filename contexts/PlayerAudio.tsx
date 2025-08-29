@@ -72,7 +72,6 @@ export default function PlayerAudioProvider({
     const isJustFinish = player.currentStatus.didJustFinish;
 
     let time: number | undefined = undefined;
-    console.log(isJustFinish);
     if (isJustFinish) {
       dispatch(setNextSong());
     }
@@ -80,12 +79,6 @@ export default function PlayerAudioProvider({
       dispatch(setNextSong());
     }
     setPosition(player.currentTime);
-    // if (isJustFinish) {
-    //   if (playListTracks.length <= 0) {
-    //   } else {
-    //     dispatch(setCurrentIndex(-1));
-    //   }
-    // }
 
     return () => {
       clearTimeout(time);

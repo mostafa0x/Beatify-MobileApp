@@ -10,19 +10,19 @@ import SongPlayBtn from "../Icons/SongPlayBtn";
 
 export default function PlaySongOptions() {
   const dispatch = useDispatch();
-  const { currentPlayListId, playListId } = useSelector(
+  const { currentPlayListId, playListId, currentPlayList } = useSelector(
     (state: StateType) => state.AudioPlayerReducer
   );
   const isSamePlayList = currentPlayListId == playListId;
   return (
     <View style={styles.container}>
-      {isSamePlayList && (
+      {isSamePlayList && currentPlayList.length > 0 && (
         <TouchableOpacity onPress={() => dispatch(setPrevSong())}>
           <SkipBackIcon />
         </TouchableOpacity>
       )}
       <SongPlayBtn size={{ w: 64, h: 64 }} />
-      {isSamePlayList && (
+      {isSamePlayList && currentPlayList.length > 0 && (
         <TouchableOpacity onPress={() => dispatch(setNextSong())}>
           <SkipforwardICon />
         </TouchableOpacity>

@@ -6,16 +6,24 @@ import SearchbarFC from "@/components/SearchbarFC";
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
 import usePlayListById from "@/hook/usePlayListById";
+import { clearPlayList } from "@/lib/store/AudioPlayerSlice";
 import { StateType } from "@/types/store/StateType";
 import { rf, rh, rw } from "@/utils/dimensions";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function HomeScreen() {
+  const dispatch = useDispatch();
   const [serachValue, setSerachValue] = useState("");
   const { genreActive } = useSelector((state: StateType) => state.AppReducer);
   const { data, isLoading } = usePlayListById(genreActive);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearPlayList());
+    };
+  }, []);
 
   return (
     <View style={styles.container}>

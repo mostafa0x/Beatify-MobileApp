@@ -30,7 +30,7 @@ function AudioPlayer() {
           <View style={styles.top}>
             <TouchableOpacity
               onPress={() => {
-                router.replace({
+                router.push({
                   pathname: "/Song" as any,
                   params: { id: currentTrack?.id },
                 });

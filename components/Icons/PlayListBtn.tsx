@@ -36,7 +36,7 @@ export default function PlayListBtn({
           ? isPlayingPlayer
             ? dispatch(setIsPlayingPlayer(false))
             : dispatch(setIsPlayingPlayer(true))
-          : dispatch(setPlay(-1));
+          : dispatch(setPlay({ id: -1, type: 0 }));
       }}
     >
       <Image
