@@ -19,6 +19,7 @@ const initialState: AudioPlayerSliceType = {
   currentTrack: null,
   currentPlayList: [],
   currentPlayListId: null,
+  isLoadingSong: true,
 };
 
 const AudioPlayerSlice = createSlice({
@@ -73,6 +74,9 @@ const AudioPlayerSlice = createSlice({
     setOnTrack: (state, action) => {
       state.onTrack = action.payload;
     },
+    setIsLoadingSong: (state, action) => {
+      state.isLoadingSong = action.payload;
+    },
   },
 });
 
@@ -84,4 +88,5 @@ export const {
   setOnTrack,
   setNextSong,
   setPrevSong,
+  setIsLoadingSong,
 } = AudioPlayerSlice.actions;

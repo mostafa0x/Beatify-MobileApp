@@ -5,28 +5,38 @@ import { StateType } from "@/types/store/StateType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import Slider from "@react-native-community/slider";
 import { Image } from "expo-image";
-import { usePathname } from "expo-router";
+import { usePathname, useRouter } from "expo-router";
 import { Skeleton } from "moti/skeleton";
 import React, { memo } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Portal } from "react-native-paper";
 import { useSelector } from "react-redux";
 import CricelBtn from "../Icons/CricelBtn";
 
 function AudioPlayer() {
   const pathName = usePathname();
+  const router = useRouter();
 
-  const { currentTrack, onTrack } = useSelector(
+  const { currentTrack, onTrack, isLoadingSong } = useSelector(
     (state: StateType) => state.AudioPlayerReducer
   );
   const { player, position, setPosition } = usePlayerAudio();
   return (
+    !isLoadingSong &&
     currentTrack?.id !== onTrack?.id &&
     currentTrack && (
       <Portal>
         <View style={styles.container}>
           <View style={styles.top}>
-            <View style={styles.leftSide}>
+            <TouchableOpacity
+              onPress={() => {
+                router.replace({
+                  pathname: "/Song" as any,
+                  params: { id: currentTrack?.id },
+                });
+              }}
+              style={styles.leftSide}
+            >
               <Skeleton>
                 <Image
                   style={styles.img}
@@ -51,7 +61,7 @@ function AudioPlayer() {
                   {currentTrack?.artist?.name}
                 </Text>
               </View>
-            </View>
+            </TouchableOpacity>
             <View style={styles.rigthSide}>
               <CricelBtn
                 size={{

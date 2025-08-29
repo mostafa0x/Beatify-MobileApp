@@ -6,7 +6,7 @@ import {
   useAudioPlayer,
   useAudioPlayerStatus,
 } from "expo-audio";
-import { usePathname } from "expo-router";
+import { usePathname, useRouter } from "expo-router";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -35,10 +35,9 @@ export default function PlayerAudioProvider({
 }) {
   const dispatch = useDispatch();
   const pathName = usePathname();
-
-  const { playListTracks, currentTrack, isPlayingPlayer } = useSelector(
-    (state: StateType) => state.AudioPlayerReducer
-  );
+  const router = useRouter();
+  const { playListTracks, currentTrack, isPlayingPlayer, onTrack } =
+    useSelector((state: StateType) => state.AudioPlayerReducer);
   const [position, setPosition] = useState(0);
   const player = useAudioPlayer({ uri: currentTrack?.preview });
   const status = useAudioPlayerStatus(player);
@@ -87,10 +86,23 @@ export default function PlayerAudioProvider({
     //     dispatch(setCurrentIndex(-1));
     //   }
     // }
+
     return () => {
       clearTimeout(time);
     };
   }, [status, player]);
+
+  useEffect(() => {
+    if (pathName == "/Song") {
+      currentTrack?.id !== onTrack?.id &&
+        router.replace({
+          pathname: "/Song" as any,
+          params: { id: currentTrack?.id },
+        });
+    }
+
+    return () => {};
+  }, [currentTrack]);
 
   return (
     <PlayerAudio.Provider

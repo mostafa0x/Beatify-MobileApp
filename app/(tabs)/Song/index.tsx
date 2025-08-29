@@ -4,7 +4,7 @@ import Ellipse from "@/components/Ellipse";
 import FooterInfo from "@/components/FooterInfo";
 import PlaySongOptions from "@/components/PlaySongOptions";
 import useSong from "@/hook/useSong";
-import { setOnTrack } from "@/lib/store/AudioPlayerSlice";
+import { setIsLoadingSong, setOnTrack } from "@/lib/store/AudioPlayerSlice";
 import { StateType } from "@/types/store/StateType";
 import { rh, rw } from "@/utils/dimensions";
 import { Image } from "expo-image";
@@ -25,11 +25,11 @@ export default function SongScreen() {
 
   useEffect(() => {
     data && dipatch(setOnTrack(data));
-
+    dipatch(setIsLoadingSong(isLoading));
     return () => {
       dipatch(setOnTrack(null));
     };
-  }, [data]);
+  }, [data, isLoading]);
 
   return (
     <View style={styles.container}>

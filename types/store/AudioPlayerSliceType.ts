@@ -9,4 +9,5 @@ export interface AudioPlayerSliceType {
   currentPlayListId: number | null;
   playListId: number | null;
   onTrack: TrackType | null;
+  isLoadingSong: boolean;
 }
