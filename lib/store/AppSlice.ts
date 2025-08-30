@@ -10,6 +10,7 @@ import { RootState } from ".";
 
 const initialState: AppSliceType = {
   genreActive: 0,
+  isLoadingFromStorage: true,
   favouritesList: [],
   genreList: [
     {
@@ -375,6 +376,10 @@ const AppSlice = createSlice({
   extraReducers(builder) {
     builder.addCase(getInStrogefavourites.fulfilled, (state, action) => {
       state.favouritesList = action.payload;
+      state.isLoadingFromStorage = false;
+    });
+    builder.addCase(getInStrogefavourites.pending, (state, action) => {
+      state.isLoadingFromStorage = true;
     });
     builder.addCase(setInStrogefavourites.fulfilled, (state, action) => {
       state.favouritesList = [action.payload, ...state.favouritesList];

@@ -7,7 +7,6 @@ import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
 import { useAppDispatch } from "@/hook/useAppDispatch";
 import usePlayListById from "@/hook/usePlayListById";
-import { getInStrogefavourites } from "@/lib/store/AppSlice";
 import { clearPlayList } from "@/lib/store/AudioPlayerSlice";
 import { StateType } from "@/types/store/StateType";
 import { rf, rh, rw } from "@/utils/dimensions";
@@ -25,7 +24,6 @@ export default function HomeScreen() {
   const { data, isLoading, isError, refetch } = usePlayListById(genreActive);
 
   useEffect(() => {
-    dispatch(getInStrogefavourites());
     return () => {
       dispatch(clearPlayList());
     };

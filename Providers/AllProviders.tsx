@@ -2,6 +2,7 @@ import AudioPlayer from "@/components/AudioPlayer";
 import PlayerAudioProvider from "@/contexts/PlayerAudio";
 import React from "react";
 import { Provider } from "react-native-paper";
+import AppRouteProvdier from "./AppRoute";
 import ReactQueryProvider from "./ReactQueryProvider";
 
 export default function AllProviders({
@@ -11,13 +12,15 @@ export default function AllProviders({
 }) {
   return (
     <Provider>
-      <ReactQueryProvider>
-        <PlayerAudioProvider>
-          {children}
+      <AppRouteProvdier>
+        <ReactQueryProvider>
+          <PlayerAudioProvider>
+            {children}
 
-          <AudioPlayer />
-        </PlayerAudioProvider>
-      </ReactQueryProvider>
+            <AudioPlayer />
+          </PlayerAudioProvider>
+        </ReactQueryProvider>
+      </AppRouteProvdier>
     </Provider>
   );
 }

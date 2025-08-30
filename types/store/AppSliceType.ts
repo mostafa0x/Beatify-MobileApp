@@ -5,4 +5,5 @@ export interface AppSliceType {
   genreActive: number;
   favouritesList: SongType[];
   genreList: genreType[];
+  isLoadingFromStorage: boolean;
 }
