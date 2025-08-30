@@ -72,7 +72,7 @@ function FavouritesList({
 const styles = StyleSheet.create({
   list: {
     width: "100%",
-    height: "60%",
+    height: "70%",
   },
   list_PlayList: {
     width: "100%",

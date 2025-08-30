@@ -44,10 +44,19 @@ const AudioPlayerSlice = createSlice({
       );
 
       if (!childFromList && state.currentTrack && action.payload.type !== 1) {
-        state.cureentIndex = 0;
+        if (state.playListTracks.length > 0) {
+          const indexF = state.playListTracks.findIndex(
+            (song) => song.id == state.onTrack?.id
+          );
+          state.cureentIndex = indexF;
+          state.currentPlayList = state.playListTracks;
+          state.currentPlayListId = state.playListId;
+        } else {
+          state.cureentIndex = 0;
+          state.currentPlayList = [];
+          state.currentPlayListId = null;
+        }
         state.currentTrack = state.onTrack;
-        state.currentPlayList = [];
-        state.currentPlayListId = null;
         state.isPlayingPlayer = true;
       } else {
         let index = -1;
@@ -59,12 +68,16 @@ const AudioPlayerSlice = createSlice({
           index = 0;
         }
         if (index !== -1) {
+          console.log("x");
+
           state.cureentIndex = index;
           state.currentTrack = state.playListTracks[index];
           state.currentPlayList = state.playListTracks;
           state.currentPlayListId = state.playListId;
           state.isPlayingPlayer = true;
         } else {
+          console.log("y");
+
           state.cureentIndex = 0;
           state.currentTrack = state.onTrack;
           state.currentPlayList = [];

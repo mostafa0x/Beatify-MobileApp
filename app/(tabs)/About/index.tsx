@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
     paddingHorizontal: rw(24),
-    paddingTop: rh(50),
+    paddingTop: rh(30),
   },
   contentContainer: {
     justifyContent: "center",
@@ -120,6 +120,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: rw(30),
-    marginTop: rh(50),
+    marginTop: rh(40),
   },
 });
