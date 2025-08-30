@@ -43,3 +43,21 @@ export const removeSongFromFavourites = async (
     throw err;
   }
 };
+
+export const setNewUser = async () => {
+  try {
+    await AsyncStorage.setItem("@newUser", "1");
+    return true;
+  } catch (err: any) {
+    throw err;
+  }
+};
+
+export const getNewUser = async () => {
+  try {
+    const key = await AsyncStorage.getItem("@newUser");
+    return key && parseInt(key) == 1 ? false : true;
+  } catch (err: any) {
+    throw err;
+  }
+};

@@ -1,22 +1,36 @@
 import CustomButton from "@/components/CustomButton";
+import Logo from "@/components/Logo";
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
+import { setNewUser } from "@/services/Storage";
 import { rf, rh, rw } from "@/utils/dimensions";
+import { useRouter } from "expo-router";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function LandingScreen() {
+  const router = useRouter();
+
+  const handleToHome = async () => {
+    await setNewUser();
+    router.replace("/");
+  };
   return (
     <View style={styles.container}>
-      <View style={styles.contantContainer}>
-        <View style={styles.textsContiner}>
-          <Text style={styles.mainTxt}>Feel the beat</Text>
-          <Text numberOfLines={2} style={styles.secTxt}>
-            Emmerse yourself into the world of music today
-          </Text>
-        </View>
-        <View style={styles.btnContiner}>
-          <CustomButton lable="Continue" />
+      <Logo size={{ w: 254, h: 254 }} />
+      <View style={styles.secContainer}>
+        <View style={styles.contantContainer}>
+          <View style={styles.textsContiner}>
+            <Text style={styles.mainTxt}>Feel the beat</Text>
+            <Text numberOfLines={2} style={styles.secTxt}>
+              Emmerse yourself into the world of music today
+            </Text>
+          </View>
+          <View style={styles.btnContiner}>
+            <TouchableOpacity onPress={handleToHome}>
+              <CustomButton lable="Continue" />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </View>
@@ -28,7 +42,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: rh(388),
+    marginTop: rh(150),
+  },
+  secContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: rh(50),
   },
   contantContainer: {
     alignItems: "center",

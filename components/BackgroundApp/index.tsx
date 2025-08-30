@@ -1,5 +1,6 @@
 import { Colors } from "@/constants/Colors";
-import React from "react";
+import { usePathname } from "expo-router";
+import React, { useEffect, useRef, useState } from "react";
 import { ImageBackground, StyleSheet, View } from "react-native";
 import LinearView from "../LinearView";
 
@@ -8,10 +9,25 @@ export default function BackgroundApp({
 }: {
   children: React.ReactNode;
 }) {
-  const x = false;
+  const isMount = useRef(false);
+  const pathName = usePathname();
+  const [face, setFace] = useState(false);
+
+  useEffect(() => {
+    isMount.current = true;
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    if (isMount.current == false) return;
+    pathName == "/Landing" ? setFace(true) : setFace(false);
+
+    return () => {};
+  }, [isMount.current, pathName]);
+
   return (
     <>
-      {x ? (
+      {face ? (
         <ImageBackground
           source={require("@/assets/images/splashBg.png")}
           style={styles.backImg}
