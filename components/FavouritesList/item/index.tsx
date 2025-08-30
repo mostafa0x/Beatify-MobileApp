@@ -46,7 +46,7 @@ function FavouritesItem({
               minimumFontScale={0.7}
               style={styles.nameSong}
             >
-              {item?.title}
+              {item?.title_short}
             </Text>
           </Skeleton>
           {!isLoading && (

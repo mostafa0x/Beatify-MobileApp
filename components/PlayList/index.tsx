@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   emptyTxt: {
     fontFamily: Fonts.OpenSansSemiBold,
     fontSize: rf(22),
-    color: Colors.textPrimary,
+    color: Colors.textSec,
   },
   emptyTxt_Error: {
     fontFamily: Fonts.OpenSansBold,

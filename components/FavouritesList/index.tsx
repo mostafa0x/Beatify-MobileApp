@@ -86,7 +86,8 @@ const styles = StyleSheet.create({
     height: rh(24),
   },
   contentContainer: {
-    paddingBottom: rh(150),
+    paddingTop: rh(20),
+    paddingBottom: rh(110),
     paddingRight: rw(15),
   },
   contentContainer_Playlist: {

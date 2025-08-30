@@ -11,6 +11,7 @@ import { getInStrogefavourites } from "@/lib/store/AppSlice";
 import { clearPlayList } from "@/lib/store/AudioPlayerSlice";
 import { StateType } from "@/types/store/StateType";
 import { rf, rh, rw } from "@/utils/dimensions";
+import { Image } from "expo-image";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useSelector } from "react-redux";
@@ -34,7 +35,13 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <Ellipse onLeft={true} x={0} y={30} type={1} />
       <View style={styles.headerContiner}>
-        <Text style={styles.mainTxt}>Welcome back!</Text>
+        <View style={styles.welcomeContainer}>
+          <Image
+            style={styles.img}
+            source={require("@/assets/images/icon.png")}
+          />
+          <Text style={styles.mainTxt}>Welcome back!</Text>
+        </View>
         <Text style={styles.secTxt}>What do you feel like today?</Text>
       </View>
       <View style={styles.serachContiner}>
@@ -80,11 +87,20 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: rh(64),
+    marginTop: rh(44),
   },
   headerContiner: {
-    paddingHorizontal: rw(24),
-    gap: rh(8),
+    paddingHorizontal: rw(5),
+    gap: rh(2),
+  },
+  welcomeContainer: {
+    flexDirection: "row",
+    gap: rw(10),
+    alignItems: "center",
+  },
+  img: {
+    width: rw(64),
+    height: rh(64),
   },
   mainTxt: {
     fontFamily: Fonts.OpenSansBold,
@@ -95,6 +111,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.OpenSansSemiBold,
     color: Colors.textSec,
     fontSize: rf(14),
+    paddingLeft: rw(80),
   },
   serachContiner: {
     marginTop: rh(24),
