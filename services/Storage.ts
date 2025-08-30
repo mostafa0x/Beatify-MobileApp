@@ -6,6 +6,7 @@ export const getFavouritesList = async () => {
     const store = await AsyncStorage.getItem("@FavouritesList");
 
     const data: SongType[] = store ? JSON.parse(store) : [];
+
     return data;
   } catch (err: any) {
     console.log(err);

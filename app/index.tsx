@@ -10,13 +10,15 @@ import usePlayListById from "@/hook/usePlayListById";
 import { clearPlayList } from "@/lib/store/AudioPlayerSlice";
 import { StateType } from "@/types/store/StateType";
 import { rf, rh, rw } from "@/utils/dimensions";
-import { Image } from "expo-image";
+import { useRouter } from "expo-router";
+import { Menu } from "lucide-react-native";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useSelector } from "react-redux";
 
 export default function HomeScreen() {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const [serachValue, setSerachValue] = useState("");
   const { genreActive, favouritesList } = useSelector(
     (state: StateType) => state.AppReducer
@@ -34,10 +36,9 @@ export default function HomeScreen() {
       <Ellipse onLeft={true} x={0} y={30} type={1} />
       <View style={styles.headerContiner}>
         <View style={styles.welcomeContainer}>
-          <Image
-            style={styles.img}
-            source={require("@/assets/images/icon.png")}
-          />
+          <TouchableOpacity onPress={() => router.push("/About" as any)}>
+            <Menu size={rf(32)} color={"#ffffff"} />
+          </TouchableOpacity>
           <Text style={styles.mainTxt}>Welcome back!</Text>
         </View>
         <Text style={styles.secTxt}>What do you feel like today?</Text>
@@ -88,18 +89,15 @@ const styles = StyleSheet.create({
     marginTop: rh(44),
   },
   headerContiner: {
-    paddingHorizontal: rw(5),
+    paddingHorizontal: rw(24),
     gap: rh(2),
   },
   welcomeContainer: {
     flexDirection: "row",
-    gap: rw(10),
+    gap: rw(20),
     alignItems: "center",
   },
-  img: {
-    width: rw(64),
-    height: rh(64),
-  },
+
   mainTxt: {
     fontFamily: Fonts.OpenSansBold,
     color: Colors.textPrimary,
@@ -109,7 +107,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.OpenSansSemiBold,
     color: Colors.textSec,
     fontSize: rf(14),
-    paddingLeft: rw(80),
+    paddingLeft: rw(58),
   },
   serachContiner: {
     marginTop: rh(24),

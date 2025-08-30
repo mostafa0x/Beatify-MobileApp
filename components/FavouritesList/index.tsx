@@ -102,5 +102,9 @@ const styles = StyleSheet.create({
 });
 
 export default memo(FavouritesList, (prev, next) => {
-  return prev.isLoading === next.isLoading && prev.from === next.from;
+  return (
+    prev.isLoading === next.isLoading &&
+    prev.from === next.from &&
+    prev.data === next.data
+  );
 });

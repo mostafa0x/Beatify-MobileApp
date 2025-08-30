@@ -99,10 +99,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     paddingHorizontal: rw(24),
     paddingTop: rh(5),
-    bottom: rh(37),
+    bottom: rh(-75),
     width: rw(390),
-    height: rh(100),
-    backgroundColor: "rgba(0,0,0,0.8)",
+    height: rh(200),
+    backgroundColor: "rgba(0, 0, 0, 0.8)",
   },
   top: {
     flexDirection: "row",

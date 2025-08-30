@@ -341,8 +341,7 @@ const initialState: AppSliceType = {
 export const getInStrogefavourites = createAsyncThunk(
   "AppSlice/getInStrogefavourites",
   async (_, thunkAPI) => {
-    const state = thunkAPI.getState() as AppSliceType;
-
+    const state = thunkAPI.getState() as RootState;
     return await getFavouritesList();
   }
 );
