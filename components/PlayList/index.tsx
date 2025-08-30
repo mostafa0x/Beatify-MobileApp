@@ -3,10 +3,10 @@ import { Fonts } from "@/constants/Fonts";
 import { PlayListType } from "@/types/PlayListType";
 import { rf, rh, rw } from "@/utils/dimensions";
 import { FlashList } from "@shopify/flash-list";
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { memo, useCallback, useEffect, useRef } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import PlayItem from "./item";
-export default function PlayList({
+function PlayList({
   data,
   isLoading,
   isError,
@@ -47,12 +47,10 @@ export default function PlayList({
   return (
     <View style={styles.list}>
       <FlashList
-        ref={listRef}
         horizontal
+        ref={listRef}
         data={data}
-        keyExtractor={(item, index) =>
-          item?.id ? item?.id?.toString() : index.toString()
-        }
+        keyExtractor={(item, index) => String(item?.id ?? index)}
         estimatedItemSize={208}
         renderItem={renderItem}
         showsHorizontalScrollIndicator={false}
@@ -89,4 +87,8 @@ const styles = StyleSheet.create({
     fontSize: rf(22),
     color: Colors.errorColor,
   },
+});
+
+export default memo(PlayList, (prev, next) => {
+  return prev.isError === next.isError && prev.isLoading === next.isLoading;
 });

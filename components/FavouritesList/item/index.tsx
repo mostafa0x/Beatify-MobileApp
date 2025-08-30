@@ -111,4 +111,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(FavouritesItem);
+export default memo(FavouritesItem, (prev, next) => {
+  return (
+    prev.isLoading === next.isLoading &&
+    prev.from === next.from &&
+    prev.item?.id === next.item?.id
+  );
+});

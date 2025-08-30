@@ -87,4 +87,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(PlayItem);
+export default memo(PlayItem, (prev, next) => {
+  return prev.isLoading === next.isLoading && prev.item?.id === next.item?.id;
+});

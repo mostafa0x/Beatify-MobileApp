@@ -49,4 +49,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(GenreItem);
+export default memo(GenreItem, (prev, next) => {
+  return prev.item?.id === next.item?.id;
+});

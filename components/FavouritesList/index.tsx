@@ -54,7 +54,7 @@ function FavouritesList({
         ref={listRef}
         numColumns={1}
         data={isLoading ? Array(4) : data ?? []}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(item, index) => String(item?.id ?? index)}
         estimatedItemSize={56}
         renderItem={renderItem}
         ItemSeparatorComponent={ItemSeparator}
@@ -101,4 +101,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(FavouritesList);
+export default memo(FavouritesList, (prev, next) => {
+  return prev.isLoading === next.isLoading && prev.from === next.from;
+});

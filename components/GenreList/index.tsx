@@ -22,7 +22,7 @@ export default function GenreList() {
       <FlashList
         horizontal
         data={genreList}
-        keyExtractor={(item, index) => item.id.toString()}
+        keyExtractor={(item, index) => String(item.id ?? index)}
         estimatedItemSize={58}
         renderItem={renderItem}
         showsHorizontalScrollIndicator={false}
