@@ -8,12 +8,14 @@ import SkipBackIcon from "../Icons/SkipBackIcon";
 import SkipforwardICon from "../Icons/SkipforwardICon";
 import SongPlayBtn from "../Icons/SongPlayBtn";
 
-export default function PlaySongOptions() {
+export default function PlaySongOptions({ playType }: { playType: number }) {
   const dispatch = useDispatch();
   const { currentPlayListId, playListId, currentPlayList } = useSelector(
     (state: StateType) => state.AudioPlayerReducer
   );
-  const isSamePlayList = currentPlayListId == playListId;
+  const isSamePlayList =
+    currentPlayListId == 1010 ? true : currentPlayListId == playListId;
+
   return (
     <View style={styles.container}>
       {isSamePlayList && currentPlayList.length > 0 && (

@@ -1,13 +1,13 @@
-import { TrackType } from "../PlayListType";
+import { SongType } from "../SongType";
 
 export interface AudioPlayerSliceType {
-  playListTracks: TrackType[];
-  currentTrack: TrackType | null;
+  playListTracks: SongType[];
+  currentTrack: SongType | null;
   cureentIndex: number;
   isPlayingPlayer: boolean;
-  currentPlayList: TrackType[];
+  currentPlayList: SongType[];
   currentPlayListId: number | null;
   playListId: number | null;
-  onTrack: TrackType | null;
+  onTrack: SongType | null;
   isLoadingSong: boolean;
 }

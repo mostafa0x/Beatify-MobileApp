@@ -1,4 +1,4 @@
-import { TrackType } from "@/types/PlayListType";
+import { SongType } from "@/types/SongType";
 import { AudioPlayerSliceType } from "@/types/store/AudioPlayerSliceType";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -6,7 +6,7 @@ interface ActionTrackType {
   type: string;
   payload: {
     id: number;
-    data: TrackType[];
+    data: SongType[];
   };
 }
 
@@ -15,6 +15,7 @@ interface ActionPlayType {
   payload: {
     id: number;
     type?: number;
+    data?: SongType[];
   };
 }
 
@@ -39,50 +40,60 @@ const AudioPlayerSlice = createSlice({
       state.playListId = action.payload.id;
     },
     setPlay: (state, action: ActionPlayType) => {
-      const childFromList = state.currentPlayList.find(
-        (item) => item.id == action.payload.id
-      );
+      if (action.payload.type == 9) {
+        const index = action.payload.data?.findIndex(
+          (song) => song.id == action.payload.id
+        );
 
-      if (!childFromList && state.currentTrack && action.payload.type !== 1) {
-        if (state.playListTracks.length > 0) {
-          const indexF = state.playListTracks.findIndex(
-            (song) => song.id == state.onTrack?.id
-          );
-          state.cureentIndex = indexF;
-          state.currentPlayList = state.playListTracks;
-          state.currentPlayListId = state.playListId;
-        } else {
-          state.cureentIndex = 0;
-          state.currentPlayList = [];
-          state.currentPlayListId = null;
-        }
-        state.currentTrack = state.onTrack;
-        state.isPlayingPlayer = true;
-      } else {
-        let index = -1;
-        if (action.payload.id !== -1) {
-          index = state.playListTracks.findIndex(
-            (item) => item?.id == action.payload.id
-          );
-        } else {
-          index = 0;
-        }
         if (index !== -1) {
-          console.log("x");
+          state.cureentIndex = index ?? 0;
+          state.currentTrack = state.onTrack;
+          state.currentPlayList = action.payload.data ?? [];
+          state.currentPlayListId = 1010;
+          state.isPlayingPlayer = true;
+        }
+      } else {
+        const childFromList = state.currentPlayList.find(
+          (item) => item.id == action.payload.id
+        );
 
-          state.cureentIndex = index;
-          state.currentTrack = state.playListTracks[index];
-          state.currentPlayList = state.playListTracks;
-          state.currentPlayListId = state.playListId;
+        if (!childFromList && state.currentTrack && action.payload.type !== 1) {
+          if (state.playListTracks.length > 0) {
+            const indexF = state.playListTracks.findIndex(
+              (song) => song.id == state.onTrack?.id
+            );
+            state.cureentIndex = indexF;
+            state.currentPlayList = state.playListTracks;
+            state.currentPlayListId = state.playListId;
+          } else {
+            state.cureentIndex = 0;
+            state.currentPlayList = [];
+            state.currentPlayListId = null;
+          }
+          state.currentTrack = state.onTrack;
           state.isPlayingPlayer = true;
         } else {
-          console.log("y");
-
-          state.cureentIndex = 0;
-          state.currentTrack = state.onTrack;
-          state.currentPlayList = [];
-          state.currentPlayListId = null;
-          state.isPlayingPlayer = true;
+          let index = -1;
+          if (action.payload.id !== -1) {
+            index = state.playListTracks.findIndex(
+              (item) => item?.id == action.payload.id
+            );
+          } else {
+            index = 0;
+          }
+          if (index !== -1) {
+            state.cureentIndex = index;
+            state.currentTrack = state.playListTracks[index];
+            state.currentPlayList = state.playListTracks;
+            state.currentPlayListId = state.playListId;
+            state.isPlayingPlayer = true;
+          } else {
+            state.cureentIndex = 0;
+            state.currentTrack = state.onTrack;
+            state.currentPlayList = [];
+            state.currentPlayListId = null;
+            state.isPlayingPlayer = true;
+          }
         }
       }
     },
@@ -123,6 +134,11 @@ const AudioPlayerSlice = createSlice({
       state.playListId = null;
       state.playListTracks = [];
     },
+    setCurrentTrackPreview: (state, action) => {
+      state.currentTrack = state.currentTrack
+        ? { ...state.currentTrack, preview: action.payload }
+        : null;
+    },
   },
 });
 
@@ -136,4 +152,5 @@ export const {
   setPrevSong,
   setIsLoadingSong,
   clearPlayList,
+  setCurrentTrackPreview,
 } = AudioPlayerSlice.actions;

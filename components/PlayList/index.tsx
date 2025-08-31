@@ -90,5 +90,9 @@ const styles = StyleSheet.create({
 });
 
 export default memo(PlayList, (prev, next) => {
-  return prev.isError === next.isError && prev.isLoading === next.isLoading;
+  return (
+    prev.isError === next.isError &&
+    prev.isLoading === next.isLoading &&
+    prev.data[0]?.id === next.data[0]?.id
+  );
 });

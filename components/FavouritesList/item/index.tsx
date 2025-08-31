@@ -22,7 +22,10 @@ function FavouritesItem({
     <TouchableOpacity
       onPress={() => {
         if (!isLoading) {
-          router.push({ pathname: "/Song" as any, params: { id: item?.id } });
+          router.push({
+            pathname: "/Song" as any,
+            params: { id: item?.id, type: from == "home" ? 1 : 0 },
+          });
         }
       }}
       style={styles.container}

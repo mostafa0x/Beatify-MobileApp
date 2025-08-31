@@ -6,7 +6,12 @@ import PlaySongOptions from "@/components/PlaySongOptions";
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
 import useSong from "@/hook/useSong";
-import { setIsLoadingSong, setOnTrack } from "@/lib/store/AudioPlayerSlice";
+import {
+  setCurrentTrackPreview,
+  setIsLoadingSong,
+  setOnTrack,
+  setPlay,
+} from "@/lib/store/AudioPlayerSlice";
 import handleIsSongLoved from "@/services/handleIsSongLoved";
 import { StateType } from "@/types/store/StateType";
 import { rf, rh, rw } from "@/utils/dimensions";
@@ -19,11 +24,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function SongScreen() {
   const dipatch = useDispatch();
-  const { id } = useLocalSearchParams();
+  const { id, type } = useLocalSearchParams();
+  const playType = Array.isArray(type) ? parseInt(type[0]) : parseInt(type);
   const songId = Array.isArray(id) ? parseInt(id[0]) : parseInt(id);
   const { data, isLoading, isError, refetch } = useSong(songId);
   const [isLoved, setIsLoved] = useState(false);
-  const { currentTrack, cureentIndex } = useSelector(
+  const { currentTrack, onTrack } = useSelector(
     (state: StateType) => state.AudioPlayerReducer
   );
   const { favouritesList } = useSelector(
@@ -34,8 +40,16 @@ export default function SongScreen() {
     if (data) {
       dipatch(setOnTrack(data));
       setIsLoved(handleIsSongLoved(favouritesList, data.id));
+      dipatch(setCurrentTrackPreview(data.preview));
+      data?.id !== currentTrack?.id &&
+        dipatch(
+          setPlay({
+            id: data?.id ?? 0,
+            type: playType == 1 ? 9 : 0,
+            data: favouritesList,
+          })
+        );
     }
-    dipatch(setIsLoadingSong(isLoading));
     return () => {
       dipatch(setOnTrack(null));
       dipatch(setIsLoadingSong(false));
@@ -91,7 +105,7 @@ export default function SongScreen() {
                 />
               </View>
               <View style={styles.playOptions}>
-                <PlaySongOptions />
+                <PlaySongOptions playType={playType} />
               </View>
             </View>
           </View>
@@ -103,7 +117,7 @@ export default function SongScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: rh(30),
+    paddingTop: rh(20),
     paddingHorizontal: rw(24),
   },
   appBar: {
