@@ -1,7 +1,13 @@
-# 🎶 Music Discovery App
+# 🎶 Beatify App
 
-This app lets you **discover and play your favorite songs, playlists, and search for any track** – just like Spotify!  
-Enjoy **smooth music streaming** with a **beautiful, easy-to-use interface** designed for music lovers.  
+<p align="center">
+  <img src="https://img.shields.io/badge/React%20Native-0.79-blue?style=for-the-badge&logo=react" />
+  <img src="https://img.shields.io/badge/Expo-53-1B1F23?style=for-the-badge&logo=expo" />
+  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" />
+</p>
+
+> **Beatify** is a modern music discovery app that lets you **discover, search, and play your favorite songs** — just like Spotify.  
+Enjoy **smooth streaming**, a **clean UI**, and **personalized playlists** all in one place!  
 
 ---
 
@@ -9,45 +15,36 @@ Enjoy **smooth music streaming** with a **beautiful, easy-to-use interface** des
 
 - 🎧 **Discover New Music** – Explore curated playlists like *Afrobeats Hits*, *Chill Lofi*, and more.  
 - 🔎 **Search Functionality** – Find any song, playlist, or artist quickly and easily.  
-- ❤️ **Save Your Favourites** – Keep track of the songs you love.  
-- 🎵 **Smooth Playback** – Stream music seamlessly with intuitive controls.  
-- 🎨 **Modern UI** – Clean and elegant design for the best listening experience.
+- ❤️ **Save Your Favourites** – Build your personal library with a single tap.  
+- 🎵 **Smooth Playback** – Intuitive player with play/pause, skip, and progress tracking.  
+- 🎨 **Beautiful Interface** – Sleek and minimal UI for a better listening experience.  
 
 ---
 
 ## 📸 Screenshots
 
-| Home Screen | Playlist View | Player Screen |
-|------------|---------------|---------------|
+| 🏠 Home Screen | 🎼 Playlist View | 🎧 Player Screen |
+|---------------|----------------|----------------|
 | ![Home Screen](./assets/screenshots/home.jpg) | ![Playlist](./assets/screenshots/playlist.jpg) | ![Player](./assets/screenshots/song.jpg) |
-
-> 💡 **Note:** Replace the image paths with your actual file paths.  
-For example:
-- `home.jpg` → الشاشة الثانية (Welcome back!)  
-- `playlist.jpg` → الشاشة الأولى (Afrobeats Hits)  
-- `player.jpg` → الشاشة الثالثة (Golden Player)
 
 ---
 
 ## 🚀 Tech Stack
 
-- **React Native 0.79** + **Expo 53**
-- **Expo Router** for navigation
-- **React Redux** + **@reduxjs/toolkit** for state management
-- **React Query** (TanStack Query) for server state & caching
-- **Axios** for API requests
-- **React Native Paper** for UI components
-- **Moti** + **Reanimated 3** for smooth animations
-- **React Native Responsive Dimensions** + **Responsive Fontsize** for consistent responsive design
-- **FlashList** from Shopify for high-performance lists
-- **Expo Audio** for music playback
-- **Expo Blur** & **Linear Gradient** for UI effects
-- **Lucide React Native** for modern icons
+| Tool | Purpose |
+|------|---------|
+| ⚛️ **React Native 0.79** | Cross-platform mobile app |
+| 🛠 **Expo 53** | Development & build tooling |
+| 🧭 **Expo Router** | Navigation between screens |
+| 🗂 **Redux Toolkit** + **React Redux** | Global state management |
+| 🔄 **React Query** | Server state caching & synchronization |
+| 🌐 **Axios** | API requests |
+| 🎨 **React Native Paper** | UI components |
+| 🌀 **Moti** + **Reanimated 3** | Smooth animations |
+| 📏 **Responsive Dimensions & Fontsize** | Responsive UI on all screens |
+| ⚡ **FlashList (Shopify)** | High-performance list rendering |
+| 🎵 **Expo Audio** | Music playback |
+| ✨ **Expo Blur & Linear Gradient** | Beautiful visual effects |
+| 🎯 **Lucide React Native** | Modern, consistent icons |
 
 ---
-
-## 📦 Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/music-discovery-app.git
