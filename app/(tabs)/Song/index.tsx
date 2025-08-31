@@ -37,6 +37,7 @@ export default function SongScreen() {
   );
   const [isLoadingImg, setIsLoadingImg] = useState(true);
   useEffect(() => {
+    dipatch(setIsLoadingSong(isLoading));
     if (data) {
       dipatch(setOnTrack(data));
       setIsLoved(handleIsSongLoved(favouritesList, data.id));
